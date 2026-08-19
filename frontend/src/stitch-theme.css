@@ -1,0 +1,28 @@
+/* Custom styles from Stitch templates */
+
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.soft-shadow, .premium-shadow {
+    box-shadow: 0px 10px 30px rgba(200, 162, 255, 0.12);
+}
+
+.pcos-input:focus, input:focus {
+    outline: none;
+    border-color: #6f4ca2 !important;
+    box-shadow: 0 0 0 2px rgba(200, 162, 255, 0.2);
+}
+
+.backdrop-blur-nav, .glass-nav {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.ambient-glow {
+    background: radial-gradient(circle at center, rgba(200, 162, 255, 0.15) 0%, transparent 70%);
+}
+
+.lavender-gradient-bg {
+    background: linear-gradient(135deg, rgba(200, 162, 255, 0.15) 0%, rgba(255, 255, 255, 0) 100%);
+}

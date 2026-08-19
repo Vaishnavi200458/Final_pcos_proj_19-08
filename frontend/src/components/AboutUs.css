@@ -1,0 +1,263 @@
+/* AboutUs.css */
+.about-container {
+    background-color: #fcf9f8;
+    color: #1b1c1c;
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+}
+
+.about-header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 50;
+    background-color: rgba(252, 249, 248, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid #e5e2e1;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.about-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 64px;
+    padding-left: 16px;
+    padding-right: 16px;
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.about-logo {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #6f4ca2;
+    letter-spacing: -0.02em;
+}
+
+.about-nav-links {
+    display: none;
+    align-items: center;
+    gap: 32px;
+}
+
+@media (min-width: 768px) {
+    .about-nav-links {
+        display: flex;
+    }
+}
+
+.about-nav-link {
+    font-size: 16px;
+    color: #5d5f5f;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.about-nav-link:hover {
+    color: #6f4ca2;
+}
+
+.about-nav-link-active {
+    color: #c8a2ff;
+    font-weight: 700;
+    border-bottom: 2px solid #c8a2ff;
+    padding-bottom: 4px;
+}
+
+.about-icon-btn {
+    color: #5d5f5f;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.about-icon-btn:hover {
+    color: #6f4ca2;
+}
+
+.about-main {
+    padding-top: 64px;
+}
+
+.about-hero {
+    padding: 64px 16px;
+    background: linear-gradient(135deg, rgba(200, 162, 255, 0.15) 0%, rgba(255, 255, 255, 0) 100%);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+
+.about-hero-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: #280056;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 10;
+}
+
+.about-hero-subtitle {
+    font-size: 18px;
+    color: #5d5f5f;
+    max-width: 672px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 10;
+}
+
+.about-mission {
+    padding: 64px 16px;
+    max-width: 1280px;
+    margin: 0 auto;
+    border-bottom: 1px solid #e5e2e1;
+}
+
+.about-grid-3 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+}
+@media (min-width: 768px) {
+    .about-grid-3 { grid-template-columns: repeat(3, 1fr); }
+}
+
+.about-value-card {
+    text-align: center;
+}
+
+.about-value-icon {
+    width: 64px;
+    height: 64px;
+    background-color: rgba(200, 162, 255, 0.3);
+    border-radius: 12px;
+    margin: 0 auto 16px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.about-value-icon span {
+    font-size: 32px;
+    color: #c8a2ff;
+}
+
+.about-value-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: #1b1c1c;
+    margin-bottom: 8px;
+}
+
+.about-value-desc {
+    font-size: 16px;
+    color: #5d5f5f;
+}
+
+.about-team {
+    padding: 64px 16px;
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.about-grid-4 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+}
+@media (min-width: 768px) {
+    .about-grid-4 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1024px) {
+    .about-grid-4 { grid-template-columns: repeat(4, 1fr); }
+}
+
+.about-team-card {
+    background-color: #ffffff;
+    padding: 32px;
+    border-radius: 20px;
+    box-shadow: 0px 10px 30px rgba(200, 162, 255, 0.12);
+    border: 1px solid #e5e2e1;
+    text-align: center;
+}
+
+.about-team-photo {
+    width: 96px;
+    height: 96px;
+    background-color: rgba(200, 162, 255, 0.2);
+    border-radius: 50%;
+    margin: 0 auto 16px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.about-team-photo span {
+    font-size: 40px;
+    color: #c8a2ff;
+}
+
+.about-team-name {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #1b1c1c;
+    margin-bottom: 4px;
+}
+
+.about-team-role {
+    color: #c8a2ff;
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 16px;
+}
+
+.about-team-desc {
+    font-size: 16px;
+    color: #5d5f5f;
+}
+
+.about-footer {
+    background-color: #f6f3f2;
+    padding: 32px 0;
+    border-top: 1px solid #e5e2e1;
+    margin-top: 48px;
+}
+
+.about-footer-content {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    text-align: center;
+}
+@media (min-width: 768px) {
+    .about-footer-content { flex-direction: row; justify-content: space-between; text-align: left; }
+}
+
+.about-footer-text {
+    font-size: 14px;
+    color: #5d5f5f;
+}
+
+.about-footer-links {
+    display: flex;
+    gap: 24px;
+}
+
+.about-footer-link {
+    font-size: 14px;
+    color: #5d5f5f;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+.about-footer-link:hover {
+    color: #6f4ca2;
+}
