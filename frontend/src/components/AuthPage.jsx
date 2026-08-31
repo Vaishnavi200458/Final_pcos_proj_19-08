@@ -1,129 +1,121 @@
 // import { useState } from "react";
 // import { supabase } from "../supabaseClient";
+// import Login from "./Login";
+// import Signup from "./Signup";
+
+// import AboutUs from "./AboutUs";
 
 // function AuthPage({ setUser }) {
-//   const [isLogin, setIsLogin] = useState(true);
+//   const [view, setView] = useState("login"); // "login" | "signup" | "about"
 //   const [email, setEmail] = useState("");
 //   const [password, setPassword] = useState("");
+//   const [isLoading, setIsLoading] = useState(false);
 
 //   const handleAuth = async (e) => {
-//   e.preventDefault();
+//     e.preventDefault();
 
-//   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+//     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-//   if (!emailRegex.test(email)) {
-//     alert("Please enter a valid email address.");
-//     return;
+//     if (!emailRegex.test(email)) {
+//       alert("Please enter a valid email address.");
+//       return;
+//     }
+
+//     if (password.length < 8) {
+//       alert("Password must be at least 8 characters long.");
+//       return;
+//     }
+
+//     if (!/[A-Z]/.test(password)) {
+//       alert("Password must contain at least one uppercase letter.");
+//       return;
+//     }
+
+//     if (!/[a-z]/.test(password)) {
+//       alert("Password must contain at least one lowercase letter.");
+//       return;
+//     }
+
+//     if (!/[0-9]/.test(password)) {
+//       alert("Password must contain at least one number.");
+//       return;
+//     }
+
+//     if (!/[!@#$%^&*]/.test(password)) {
+//       alert("Password must contain at least one special character.");
+//       return;
+//     }
+
+//     setIsLoading(true);
+
+//     try {
+//       const response = view === "login"
+//         ? await supabase.auth.signInWithPassword({ email, password })
+//         : await supabase.auth.signUp({ email, password });
+
+//       if (response.error) {
+//         alert(response.error.message);
+//         return;
+//       }
+
+//       const { data } = await supabase.auth.getUser();
+//       setUser(data.user);
+
+//       if (view === "signup") {
+//         alert("Signup successful. Please check your email if confirmation is required.");
+//       }
+//     } finally {
+//       setIsLoading(false);
+//     }
+//   };
+
+//   if (view === "about") {
+//     return <AboutUs onNavigateToLogin={() => setView("login")} onNavigateToSignup={() => setView("signup")} />;
 //   }
 
-//   if (password.length < 8) {
-//     alert("Password must be at least 8 characters long.");
-//     return;
-//   }
-
-//   if (!/[A-Z]/.test(password)) {
-//     alert("Password must contain at least one uppercase letter.");
-//     return;
-//   }
-
-//   if (!/[a-z]/.test(password)) {
-//     alert("Password must contain at least one lowercase letter.");
-//     return;
-//   }
-
-//   if (!/[0-9]/.test(password)) {
-//     alert("Password must contain at least one number.");
-//     return;
-//   }
-
-//   if (!/[!@#$%^&*]/.test(password)) {
-//     alert("Password must contain at least one special character.");
-//     return;
-//   }
-
-//   const response = isLogin
-//     ? await supabase.auth.signInWithPassword({ email, password })
-//     : await supabase.auth.signUp({ email, password });
-
-//   if (response.error) {
-//     alert(response.error.message);
-//     return;
-//   }
-
-//   const { data } = await supabase.auth.getUser();
-//   setUser(data.user);
-
-//   if (!isLogin) {
-//     alert("Signup successful. Please check your email if confirmation is required.");
-//   }
-// };
-
-//   return (
-//     <div className="app">
-//       <div className="card">
-//         <h2>{isLogin ? "Login" : "Sign Up"}</h2>
-//         <p className="section-subtitle">
-//           Access your personal PCOS dashboard securely.
-//         </p>
-
-//         <form onSubmit={handleAuth} className="form-grid">
-//           <input
-//             type="email"
-//             placeholder="Email address"
-//             value={email}
-//             onChange={(e) => setEmail(e.target.value)}
-//             required
-//           />
-
-//           <input
-//             type="password"
-//             placeholder="Password"
-//             value={password}
-//             onChange={(e) => setPassword(e.target.value)}
-//             required
-//           />
-
-//           <button className="predict-btn" type="submit">
-//             {isLogin ? "Login" : "Create Account"}
-//           </button>
-//         </form>
-
-//         <p className="note">
-//           {isLogin ? "New user?" : "Already have an account?"}{" "}
-//           <button
-//             onClick={() => setIsLogin(!isLogin)}
-//             style={{
-//               border: "none",
-//               background: "transparent",
-//               color: "#5a2d82",
-//               fontWeight: "bold",
-//               cursor: "pointer",
-//             }}
-//           >
-//             {isLogin ? "Sign up here" : "Login here"}
-//           </button>
-//         </p>
-//       </div>
-//     </div>
+//   return view === "login" ? (
+//     <Login 
+//       email={email} 
+//       setEmail={setEmail} 
+//       password={password} 
+//       setPassword={setPassword} 
+//       onSubmit={handleAuth} 
+//       onSwitchToSignup={() => setView("signup")}
+//       onSwitchToAboutUs={() => setView("about")}
+//       isLoading={isLoading}
+//     />
+//   ) : (
+//     <Signup
+//       email={email}
+//       setEmail={setEmail}
+//       password={password}
+//       setPassword={setPassword}
+//       onSubmit={handleAuth}
+//       onSwitchToLogin={() => setView("login")}
+//       onSwitchToAboutUs={() => setView("about")}
+//       isLoading={isLoading}
+//     />
 //   );
 // }
 
 // export default AuthPage;
 
+
 import { useState } from "react";
 import { supabase } from "../supabaseClient";
+
 import Login from "./Login";
 import Signup from "./Signup";
-
 import AboutUs from "./AboutUs";
 
 function AuthPage({ setUser }) {
-  const [view, setView] = useState("login"); // "login" | "signup" | "about"
+  const [view, setView] = useState("login");
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleAuth = async (e) => {
+  const handleAuth = async (e, fullName = "") => {
     e.preventDefault();
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -133,77 +125,143 @@ function AuthPage({ setUser }) {
       return;
     }
 
-    if (password.length < 8) {
-      alert("Password must be at least 8 characters long.");
-      return;
-    }
+    /*
+      LOGIN:
+      Only require a password.
 
-    if (!/[A-Z]/.test(password)) {
-      alert("Password must contain at least one uppercase letter.");
-      return;
-    }
+      SIGNUP:
+      Apply strong password validation.
+    */
+    if (view === "signup") {
+      if (password.length < 8) {
+        alert("Password must be at least 8 characters long.");
+        return;
+      }
 
-    if (!/[a-z]/.test(password)) {
-      alert("Password must contain at least one lowercase letter.");
-      return;
-    }
+      if (!/[A-Z]/.test(password)) {
+        alert("Password must contain at least one uppercase letter.");
+        return;
+      }
 
-    if (!/[0-9]/.test(password)) {
-      alert("Password must contain at least one number.");
-      return;
-    }
+      if (!/[a-z]/.test(password)) {
+        alert("Password must contain at least one lowercase letter.");
+        return;
+      }
 
-    if (!/[!@#$%^&*]/.test(password)) {
-      alert("Password must contain at least one special character.");
-      return;
+      if (!/[0-9]/.test(password)) {
+        alert("Password must contain at least one number.");
+        return;
+      }
+
+      if (!/[!@#$%^&*]/.test(password)) {
+        alert("Password must contain at least one special character.");
+        return;
+      }
     }
 
     setIsLoading(true);
 
     try {
-      const response = view === "login"
-        ? await supabase.auth.signInWithPassword({ email, password })
-        : await supabase.auth.signUp({ email, password });
+      if (view === "login") {
+        const { data, error } =
+          await supabase.auth.signInWithPassword({
+            email,
+            password,
+          });
 
-      if (response.error) {
-        alert(response.error.message);
-        return;
+        if (error) {
+          alert(error.message);
+          return;
+        }
+
+        setUser(data.user);
+      } else {
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password,
+
+          options: {
+            data: {
+              full_name: fullName,
+            },
+          },
+        });
+
+        if (error) {
+          alert(error.message);
+          return;
+        }
+
+        /*
+          If email confirmation is OFF,
+          Supabase normally gives us a session immediately.
+        */
+        if (data.session && data.user) {
+          setUser(data.user);
+        } else {
+          /*
+            If email confirmation is ON,
+            the user must confirm their email first.
+          */
+          alert(
+            "Signup successful. Please check your email and confirm your account before logging in."
+          );
+
+          setView("login");
+          setPassword("");
+        }
       }
-
-      const { data } = await supabase.auth.getUser();
-      setUser(data.user);
-
-      if (view === "signup") {
-        alert("Signup successful. Please check your email if confirmation is required.");
-      }
+    } catch (error) {
+      console.error("Authentication error:", error);
+      alert("Something went wrong. Please try again.");
     } finally {
       setIsLoading(false);
     }
   };
 
+  /*
+    Public About Us page
+    Accessible before login.
+  */
   if (view === "about") {
-    return <AboutUs onNavigateToLogin={() => setView("login")} onNavigateToSignup={() => setView("signup")} />;
+    return (
+      <AboutUs
+        publicView={true}
+        onNavigateToLogin={() => setView("login")}
+        onNavigateToSignup={() => setView("signup")}
+      />
+    );
   }
 
-  return view === "login" ? (
-    <Login 
-      email={email} 
-      setEmail={setEmail} 
-      password={password} 
-      setPassword={setPassword} 
-      onSubmit={handleAuth} 
-      onSwitchToSignup={() => setView("signup")}
-      onSwitchToAboutUs={() => setView("about")}
-      isLoading={isLoading}
-    />
-  ) : (
+  if (view === "login") {
+    return (
+      <Login
+        email={email}
+        setEmail={setEmail}
+        password={password}
+        setPassword={setPassword}
+        onSubmit={handleAuth}
+        onSwitchToSignup={() => {
+          setPassword("");
+          setView("signup");
+        }}
+        onSwitchToAboutUs={() => setView("about")}
+        isLoading={isLoading}
+      />
+    );
+  }
+
+  return (
     <Signup
       email={email}
       setEmail={setEmail}
       password={password}
       setPassword={setPassword}
       onSubmit={handleAuth}
-      onSwitchToLogin={() => setView("login")}
+      onSwitchToLogin={() => {
+        setPassword("");
+        setView("login");
+      }}
       onSwitchToAboutUs={() => setView("about")}
       isLoading={isLoading}
     />

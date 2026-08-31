@@ -349,6 +349,7 @@ import AboutUs from "./components/AboutUs";
 import "./App.css";
 import AppNavbar from "./components/AppNavbar";
 import AppFooter from "./components/AppFooter";
+import Profile from "./components/Profile";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -414,6 +415,7 @@ function App() {
       onHealthSummaryClick={() => setCurrentPage("health-summary")}
       onRecordsClick={() => setCurrentPage("records")}
       onAboutClick={() => setCurrentPage("about")}
+      onProfileClick={() => setCurrentPage("profile")}
       onLogout={handleLogout}
     />
 
@@ -435,20 +437,25 @@ function App() {
       {currentPage === "dashboard" && (
         <AIDashboard
           result={result}
-          user={user}
-          onPredictClick={() => setCurrentPage("predict")}
-          onRecordsClick={() => setCurrentPage("records")}
+         user={user}
+         onPredictClick={() => setCurrentPage("predict")}
+         onRecordsClick={() => setCurrentPage("records")}
           onAboutClick={() => setCurrentPage("about")}
+         onProfileClick={() => setCurrentPage("profile")}
+         onLogout={handleLogout}
         />
       )}
 
       {currentPage === "records" && (
-        <HealthRecords
-          user={user}
-          onDashboardClick={() => setCurrentPage("dashboard")}
-          onPredictClick={() => setCurrentPage("predict")}
-          onAboutClick={() => setCurrentPage("about")}
-        />
+       <HealthRecords
+         user={user}
+         onDashboardClick={() => setCurrentPage("dashboard")}
+         onPredictClick={() => setCurrentPage("predict")}
+         onHealthSummaryClick={() => setCurrentPage("health-summary")}
+         onAboutClick={() => setCurrentPage("about")}
+         onLogout={handleLogout}
+         onProfileClick={() => setCurrentPage("profile")}
+       />
       )}
 
       {currentPage === "about" && (
@@ -457,7 +464,22 @@ function App() {
           onDashboardClick={() => setCurrentPage("dashboard")}
           onPredictClick={() => setCurrentPage("predict")}
           onRecordsClick={() => setCurrentPage("records")}
+          onProfileClick={() => setCurrentPage("profile")}
         />
+      )}
+
+      {currentPage === "profile" && (
+       <Profile
+         user={user}
+         setUser={setUser}
+         onDashboardClick={() => setCurrentPage("dashboard")}
+         onPredictClick={() => setCurrentPage("predict")}
+         onHealthSummaryClick={() => setCurrentPage("health-summary")}
+         onRecordsClick={() => setCurrentPage("records")}
+         onAboutClick={() => setCurrentPage("about")}
+         onProfileClick={() => setCurrentPage("profile")}
+         onLogout={handleLogout}
+       />
       )}
     </div>
   );

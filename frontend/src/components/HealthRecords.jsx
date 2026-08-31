@@ -6,8 +6,17 @@ import {
   deleteTrackerEntry,
 } from "../api/trackerApi";
 import { Pencil, Trash2 } from "lucide-react";
+import AppNavbar from "./AppNavbar";
 
-function HealthRecords({ user, onDashboardClick, onPredictClick, onAboutClick }) {
+function HealthRecords({
+  user,
+  onDashboardClick,
+  onPredictClick,
+  onHealthSummaryClick,
+  onAboutClick,
+  onProfileClick,
+  onLogout,
+}) {
   const [records, setRecords] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
@@ -82,8 +91,7 @@ function HealthRecords({ user, onDashboardClick, onPredictClick, onAboutClick })
     ? new Date(records[0].created_at).toLocaleDateString()
     : "--";
 
-  const userName =
-    user?.user_metadata?.full_name || user?.email?.split("@")[0] || "User";
+
 
   const handleEditClick = (record) => {
     setEditingRecord(record);
@@ -197,19 +205,17 @@ function HealthRecords({ user, onDashboardClick, onPredictClick, onAboutClick })
 
   return (
     <div className="records-page">
-      <nav className="dashboard-nav">
-        <div className="brand">PCOSense</div>
-
-        <div className="nav-links">
-          <button onClick={onDashboardClick}>Dashboard</button>
-          <button onClick={onPredictClick}>Predict PCOS</button>
-          <button>Health Summary</button>
-          <button className="active-nav">My Records</button>
-          <button onClick={onAboutClick}>About Us</button>
-        </div>
-
-        <div className="profile-circle">{userName.charAt(0).toUpperCase()}</div>
-      </nav>
+      <AppNavbar
+       user={user}
+       currentPage="records"
+       onDashboardClick={onDashboardClick}
+       onPredictClick={onPredictClick}
+       onHealthSummaryClick={onHealthSummaryClick}
+       onRecordsClick={() => {}}
+       onAboutClick={onAboutClick}
+       onLogout={onLogout}
+       onProfileClick={onProfileClick}
+      />
 
       <section className="records-header">
         <div>

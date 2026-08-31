@@ -25,6 +25,8 @@ function AIDashboard({
   onHealthSummaryClick,
   onRecordsClick,
   onAboutClick,
+  onProfileClick,
+  onLogout,
 }) {
   const [history, setHistory] = useState([]);
 
@@ -140,12 +142,14 @@ function AIDashboard({
 
       <AppNavbar
         user={user}
-        currentPage="dashboard"
-        onDashboardClick={() => {}}
+       currentPage="dashboard"
+       onDashboardClick={onDashboardClick}
        onPredictClick={onPredictClick}
        onHealthSummaryClick={onHealthSummaryClick}
        onRecordsClick={onRecordsClick}
-        onAboutClick={onAboutClick}
+       onAboutClick={onAboutClick}
+       onProfileClick={onProfileClick}
+       onLogout={onLogout}
       />
 
       <section className="dashboard-welcome">

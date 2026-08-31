@@ -1,4 +1,5 @@
 // import React, { useState } from "react";
+
 // function AppNavbar({
 //   user,
 //   currentPage,
@@ -13,9 +14,17 @@
 //     user?.user_metadata?.full_name ||
 //     user?.email ||
 //     "User";
-  
+
 //   const [showMenu, setShowMenu] = useState(false);
-  
+
+//   const handleLogoutClick = () => {
+//     console.log("BUTTON CLICKED");
+//     setShowMenu(false);
+
+//     if (onLogout) {
+//       onLogout();
+//     }
+//   };
 
 //   return (
 //     <nav className="dashboard-nav">
@@ -29,6 +38,7 @@
 
 //       <div className="nav-links">
 //         <button
+//           type="button"
 //           className={
 //             currentPage === "dashboard"
 //               ? "active-nav"
@@ -40,6 +50,7 @@
 //         </button>
 
 //         <button
+//           type="button"
 //           className={
 //             currentPage === "predict"
 //               ? "active-nav"
@@ -51,6 +62,7 @@
 //         </button>
 
 //         <button
+//           type="button"
 //           className={
 //             currentPage === "health-summary"
 //               ? "active-nav"
@@ -62,6 +74,7 @@
 //         </button>
 
 //         <button
+//           type="button"
 //           className={
 //             currentPage === "records"
 //               ? "active-nav"
@@ -73,6 +86,7 @@
 //         </button>
 
 //         <button
+//           type="button"
 //           className={
 //             currentPage === "about"
 //               ? "active-nav"
@@ -85,44 +99,35 @@
 //       </div>
 
 //       <div className="profile-container">
-//   <div className="profile-container">
-//   <div
-//     className="profile-circle"
-//     onClick={() => setShowMenu(!showMenu)}
-//   >
-//     {userName.charAt(0).toUpperCase()}
-//   </div>
+//         <button
+//           type="button"
+//           className="profile-circle"
+//           onClick={() => setShowMenu((previous) => !previous)}
+//           aria-label="Open profile menu"
+//         >
+//           {userName.charAt(0).toUpperCase()}
+//         </button>
 
-//   {showMenu && (
-//     <div className="profile-dropdown">
-//       <button
-//   className="logout-btn"
-//   onClick={onLogout}
-// >
-//   Log Out
-// </button>
-//     </div>
-//   )}
-// </div>
-
-//   {showMenu && (
-//   <div className="profile-dropdown">
-//     <button
-//       type="button"
-//       className="logout-btn"
-//       onClick={() => {
-//         console.log("BUTTON CLICKED");
-//         setShowMenu(false);
-//         onLogout();
-//       }}
-//     >
-//       Log Out
-//     </button>
-//   </div>
-// )}
+//         {showMenu && (
+//           <div className="profile-dropdown">
+//             <button
+//               type="button"
+//               className="logout-btn"
+//               onClick={handleLogoutClick}
+//             >
+//               Log Out
+//             </button>
+//           </div>
+//         )}
+//       </div>
+//     </nav>
+//   );
+// }
 
 // export default AppNavbar;
+
 import React, { useState } from "react";
+import { User, FileText, LogOut, ChevronDown } from "lucide-react";
 
 function AppNavbar({
   user,
@@ -132,21 +137,39 @@ function AppNavbar({
   onHealthSummaryClick,
   onRecordsClick,
   onAboutClick,
+  onProfileClick,
   onLogout,
 }) {
   const userName =
     user?.user_metadata?.full_name ||
-    user?.email ||
+    user?.email?.split("@")[0] ||
     "User";
+
+  const userEmail = user?.email || "";
 
   const [showMenu, setShowMenu] = useState(false);
 
   const handleLogoutClick = () => {
-    console.log("BUTTON CLICKED");
     setShowMenu(false);
 
     if (onLogout) {
       onLogout();
+    }
+  };
+
+  const handleProfileClick = () => {
+    setShowMenu(false);
+
+    if (onProfileClick) {
+      onProfileClick();
+    }
+  };
+
+  const handleRecordsClick = () => {
+    setShowMenu(false);
+
+    if (onRecordsClick) {
+      onRecordsClick();
     }
   };
 
@@ -163,11 +186,7 @@ function AppNavbar({
       <div className="nav-links">
         <button
           type="button"
-          className={
-            currentPage === "dashboard"
-              ? "active-nav"
-              : ""
-          }
+          className={currentPage === "dashboard" ? "active-nav" : ""}
           onClick={onDashboardClick}
         >
           Dashboard
@@ -175,11 +194,7 @@ function AppNavbar({
 
         <button
           type="button"
-          className={
-            currentPage === "predict"
-              ? "active-nav"
-              : ""
-          }
+          className={currentPage === "predict" ? "active-nav" : ""}
           onClick={onPredictClick}
         >
           Predict PCOS
@@ -187,11 +202,7 @@ function AppNavbar({
 
         <button
           type="button"
-          className={
-            currentPage === "health-summary"
-              ? "active-nav"
-              : ""
-          }
+          className={currentPage === "health-summary" ? "active-nav" : ""}
           onClick={onHealthSummaryClick}
         >
           Health Summary
@@ -199,11 +210,7 @@ function AppNavbar({
 
         <button
           type="button"
-          className={
-            currentPage === "records"
-              ? "active-nav"
-              : ""
-          }
+          className={currentPage === "records" ? "active-nav" : ""}
           onClick={onRecordsClick}
         >
           My Records
@@ -211,11 +218,7 @@ function AppNavbar({
 
         <button
           type="button"
-          className={
-            currentPage === "about"
-              ? "active-nav"
-              : ""
-          }
+          className={currentPage === "about" ? "active-nav" : ""}
           onClick={onAboutClick}
         >
           About Us
@@ -225,21 +228,62 @@ function AppNavbar({
       <div className="profile-container">
         <button
           type="button"
-          className="profile-circle"
+          className="profile-trigger"
           onClick={() => setShowMenu((previous) => !previous)}
           aria-label="Open profile menu"
         >
-          {userName.charAt(0).toUpperCase()}
+          <span className="profile-circle">
+            {userName.charAt(0).toUpperCase()}
+          </span>
+
+          <ChevronDown
+            size={16}
+            className={`profile-chevron ${showMenu ? "open" : ""}`}
+          />
         </button>
 
         {showMenu && (
           <div className="profile-dropdown">
+            <div className="profile-dropdown-header">
+              <div className="profile-dropdown-avatar">
+                {userName.charAt(0).toUpperCase()}
+              </div>
+
+              <div className="profile-dropdown-user">
+                <strong>{userName}</strong>
+                <span>{userEmail}</span>
+              </div>
+            </div>
+
+            <div className="profile-dropdown-divider"></div>
+
             <button
               type="button"
-              className="logout-btn"
+              className="profile-menu-item"
+              onClick={handleProfileClick}
+            >
+              <User size={18} />
+              <span>My Profile</span>
+            </button>
+
+            <button
+              type="button"
+              className="profile-menu-item"
+              onClick={handleRecordsClick}
+            >
+              <FileText size={18} />
+              <span>My Records</span>
+            </button>
+
+            <div className="profile-dropdown-divider"></div>
+
+            <button
+              type="button"
+              className="profile-menu-item logout-menu-item"
               onClick={handleLogoutClick}
             >
-              Log Out
+              <LogOut size={18} />
+              <span>Log Out</span>
             </button>
           </div>
         )}

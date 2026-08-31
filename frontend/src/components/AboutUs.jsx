@@ -1,117 +1,173 @@
-import React from 'react';
-import './AboutUs.css';
+import React from "react";
+import { Activity, Heart, Shield, User } from "lucide-react";
 
-export default function AboutUs() {
+import AppNavbar from "./AppNavbar";
+import AppFooter from "./AppFooter";
+
+import "./AboutUs.css";
+
+export default function AboutUs({
+  user,
+  publicView = false,
+
+  onNavigateToLogin,
+  onNavigateToSignup,
+
+  onDashboardClick,
+  onPredictClick,
+  onHealthSummaryClick,
+  onRecordsClick,
+  onAboutClick,
+  onProfileClick,
+  onLogout,
+}) {
   return (
-    <div className="about-container">
-      {/* TopNavBar */}
-      <header className="about-header">
-        <nav className="about-nav">
-          <div className="about-logo">
-            <span>PCOSense</span>
+    <div className="about-wrapper">
+
+      {/* PUBLIC NAVBAR - before login */}
+      {publicView ? (
+        <header className="about-public-header">
+          <div className="about-public-nav">
+            <div className="about-public-logo">
+              PCOSense
+            </div>
+
+            <div className="about-public-actions">
+              <button
+                type="button"
+                className="about-public-login"
+                onClick={onNavigateToLogin}
+              >
+                Log In
+              </button>
+
+              <button
+                type="button"
+                className="about-public-signup"
+                onClick={onNavigateToSignup}
+              >
+                Sign Up
+              </button>
+            </div>
           </div>
-          <div className="about-nav-links">
-            <a className="about-nav-link" href="#">Dashboard</a>
-            <a className="about-nav-link" href="#">Predict PCOS</a>
-            <a className="about-nav-link" href="#">Health Summary</a>
-            <a className="about-nav-link" href="#">My Records</a>
-            <a className="about-nav-link about-nav-link-active" href="#">About Us</a>
-          </div>
-          <div style={{display: 'flex', alignItems: 'center', gap: '16px'}}>
-            <button className="material-symbols-outlined about-icon-btn">notifications</button>
-          </div>
-        </nav>
-      </header>
+        </header>
+      ) : (
+        /* LOGGED-IN NAVBAR */
+        <AppNavbar
+          user={user}
+         currentPage="about"
+         onDashboardClick={onDashboardClick}
+         onPredictClick={onPredictClick}
+         onHealthSummaryClick={onHealthSummaryClick}
+         onRecordsClick={onRecordsClick}
+         onAboutClick={onAboutClick}
+         onProfileClick={onProfileClick}
+         onLogout={onLogout}
+        />
+      )}
 
       <main className="about-main">
-        {/* Hero Section */}
+        {/* Hero */}
         <section className="about-hero">
-          <div className="about-hero-title-container" style={{maxWidth: '896px', margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 10}}>
-            <h1 className="about-hero-title">Meet the Team</h1>
-            <p className="about-hero-subtitle">We're a passionate team of medical professionals and technologists dedicated to transforming PCOS care through AI-driven insights.</p>
+          <div className="about-hero-pattern"></div>
+
+          <div className="about-hero-content">
+            <h1 className="about-hero-title">
+              Meet the Team
+            </h1>
+
+            <p className="about-hero-desc">
+              We're a passionate team of technologists dedicated to
+              transforming PCOS care through AI-driven insights.
+            </p>
           </div>
         </section>
 
-        {/* Mission/Values Section */}
-        <section className="about-mission">
-          <div className="about-grid-3">
-            <div className="about-value-card">
+        {/* Values */}
+        <section className="about-values-section">
+          <div className="about-values-grid">
+            <div className="about-value-item">
               <div className="about-value-icon">
-                <span className="material-symbols-outlined">analytics</span>
+                <Activity size={32} />
               </div>
-              <h3 className="about-value-title">Data-Driven</h3>
-              <p className="about-value-desc">Leveraging advanced AI to uncover personalized insights and predictive health patterns.</p>
+
+              <h3 className="about-value-title">
+                Data-Driven
+              </h3>
+
+              <p className="about-value-desc">
+                Leveraging advanced AI to uncover personalized insights and
+                predictive health patterns.
+              </p>
             </div>
-            <div className="about-value-card">
+
+            <div className="about-value-item">
               <div className="about-value-icon">
-                <span className="material-symbols-outlined">favorite</span>
+                <Heart size={32} />
               </div>
-              <h3 className="about-value-title">Empathetic Care</h3>
-              <p className="about-value-desc">Designing solutions with deep understanding of the daily challenges faced by those with PCOS.</p>
+
+              <h3 className="about-value-title">
+                Empathetic Care
+              </h3>
+
+              <p className="about-value-desc">
+                Designing solutions with a deeper understanding of the daily
+                challenges associated with PCOS.
+              </p>
             </div>
-            <div className="about-value-card">
+
+            <div className="about-value-item">
               <div className="about-value-icon">
-                <span className="material-symbols-outlined">shield_lock</span>
+                <Shield size={32} />
               </div>
-              <h3 className="about-value-title">Secure &amp; Private</h3>
-              <p className="about-value-desc">Ensuring the highest standards of data security and patient confidentiality at all times.</p>
+
+              <h3 className="about-value-title">
+                Secure & Private
+              </h3>
+
+              <p className="about-value-desc">
+                Prioritizing data security and user privacy throughout the
+                health management experience.
+              </p>
             </div>
           </div>
         </section>
 
-        {/* Leadership Team Section */}
-        <section className="about-team">
-          <div className="about-grid-4">
-            <div className="about-team-card">
-              <div className="about-team-photo">
-                <span className="material-symbols-outlined">person</span>
-              </div>
-              <h3 className="about-team-name">Manasvi Naik</h3>
-              <p className="about-team-role">Computer Engineering Student</p>
-              <p className="about-team-desc">Passionate about building AI-driven solutions for healthcare.</p>
-            </div>
-            
-            <div className="about-team-card">
-              <div className="about-team-photo">
-                <span className="material-symbols-outlined">person</span>
-              </div>
-              <h3 className="about-team-name">Mehek Abhyankar</h3>
-              <p className="about-team-role">Computer Engineering Student</p>
-              <p className="about-team-desc">Passionate about building AI-driven solutions for healthcare.</p>
-            </div>
-            
-            <div className="about-team-card">
-              <div className="about-team-photo">
-                <span className="material-symbols-outlined">person</span>
-              </div>
-              <h3 className="about-team-name">Menaka Jadhav</h3>
-              <p className="about-team-role">Computer Engineering Student</p>
-              <p className="about-team-desc">Passionate about building AI-driven solutions for healthcare.</p>
-            </div>
-
-            <div className="about-team-card">
-              <div className="about-team-photo">
-                <span className="material-symbols-outlined">person</span>
-              </div>
-              <h3 className="about-team-name">Vaishnavi Paliwal</h3>
-              <p className="about-team-role">Computer Engineering Student</p>
-              <p className="about-team-desc">Passionate about building AI-driven solutions for healthcare.</p>
-            </div>
+        {/* Team */}
+        <section className="about-team-section">
+          <div className="about-team-grid">
+            <TeamMember name="Manasvi Naik" />
+            <TeamMember name="Mehek Abhyankar" />
+            <TeamMember name="Menaka Jadhav" />
+            <TeamMember name="Vaishnavi Paliwal" />
           </div>
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="about-footer">
-        <div className="about-footer-content">
-          <p className="about-footer-text">© 2024 PCOSense. All rights reserved.</p>
-          <div className="about-footer-links">
-            <a className="about-footer-link" href="#">Privacy Policy</a>
-            <a className="about-footer-link" href="#">Terms of Service</a>
-            <a className="about-footer-link" href="#">Contact Us</a>
-          </div>
-        </div>
-      </footer>
+      {/* Only show your app footer after login */}
+      {!publicView && <AppFooter />}
+    </div>
+  );
+}
+
+function TeamMember({ name }) {
+  return (
+    <div className="about-team-member">
+      <div className="about-member-avatar">
+        <User size={40} />
+      </div>
+
+      <h3 className="about-member-name">
+        {name}
+      </h3>
+
+      <p className="about-member-role">
+        Computer Engineering Student
+      </p>
+
+      <p className="about-member-desc">
+        Passionate about building AI-driven solutions for healthcare.
+      </p>
     </div>
   );
 }
