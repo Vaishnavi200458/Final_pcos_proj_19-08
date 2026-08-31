@@ -108,7 +108,8 @@ def predict_pcos(data):
 
     row = np.array([[full_input[f] for f in feature_names]])
 
-    probability = pipeline.predict_proba(row)[0][1]
+    probabilities = pipeline.predict_proba(row)[0]
+    probability = probabilities[1]
     prediction = int(probability >= threshold)
 
     if probability < 0.30:
@@ -136,6 +137,7 @@ def predict_pcos(data):
     return {
         "pcos_risk": bool(prediction),
         "risk_score": round(float(probability) * 100, 2),
+        "confidence": round(float(max(probabilities)) * 100, 2),
         "probability": round(float(probability), 4),
         "risk_level": risk_level,
         "bmi": bmi,

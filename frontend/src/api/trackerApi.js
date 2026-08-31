@@ -21,6 +21,20 @@ export const getTrackerHistory = async (userId) => {
   return data;
 };
 
+export const getLatestTrackerEntry = async (userId) => {
+  const { data, error } = await supabase
+    .from("pcos_entries")
+    .select("*")
+    .eq("user_id", userId)
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (error) throw error;
+
+  return data;
+};
+
 export const updateTrackerEntry = async (record) => {
   let query = supabase.from("pcos_entries").update(record);
 

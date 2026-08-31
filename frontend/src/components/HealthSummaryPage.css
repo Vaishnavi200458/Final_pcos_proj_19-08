@@ -1,0 +1,893 @@
+/* ======================================================
+   HEALTH SUMMARY PAGE
+====================================================== */
+
+.health-summary-wrapper {
+  width: 100%;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+
+  background: #f8f5fb;
+}
+
+.health-summary-wrapper .dashboard-nav {
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 0;
+}
+
+.health-summary-wrapper .dashboard-footer {
+  width: 100%;
+  max-width: none;
+
+  margin: 0;
+  border-radius: 0;
+}
+
+.health-page,
+.health-page * {
+  box-sizing: border-box;
+}
+
+.health-page {
+  width: 100%;
+  max-width: none;
+  min-height: 100vh;
+
+  margin: 0;
+  padding: 18px 22px 36px;
+
+  background: linear-gradient(
+    180deg,
+    #faf8ff 0%,
+    #f5f1ff 55%,
+    #ffffff 100%
+  );
+
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+
+/* ======================================================
+   EMPTY STATE
+====================================================== */
+
+.health-page .empty-state {
+  width: 100%;
+  min-height: 70vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  color: #777;
+  text-align: center;
+}
+
+.health-page .empty-state svg {
+  color: #9b6dff;
+  margin-bottom: 18px;
+}
+
+.health-page .empty-state h2 {
+  color: #43256d;
+  font-size: 32px;
+  margin: 0 0 10px;
+}
+
+.health-page .empty-state p {
+  max-width: 550px;
+  line-height: 1.7;
+}
+
+
+/* ======================================================
+   HERO
+====================================================== */
+
+.health-page .hero-section {
+  width: 100%;
+  max-width: none;
+
+  margin: 0 0 18px;
+
+  display: grid;
+  grid-template-columns: 1.6fr 0.9fr;
+  gap: 18px;
+
+  align-items: stretch;
+}
+
+.health-page .hero-left,
+.health-page .hero-right {
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+  margin: 0;
+
+  display: flex;
+}
+
+
+/* LEFT PREDICTION CARD */
+
+.health-page .hero-card {
+  width: 100%;
+  min-width: 0;
+
+  padding: 26px 28px;
+
+  background: #ffffff;
+  border: 1px solid #eee7ff;
+  border-radius: 22px;
+
+  box-shadow: 0 10px 26px rgba(117, 88, 196, 0.07);
+}
+
+.health-page .risk-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  padding: 7px 13px;
+  margin-bottom: 17px;
+
+  background: #efe8ff;
+  color: #7d4ee5;
+
+  border-radius: 50px;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.health-page .hero-card h1 {
+  margin: 0;
+
+  color: #33175d;
+
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.health-page .risk-score {
+  margin-top: 12px;
+
+  color: #8b5cf6;
+
+  font-size: 56px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.health-page .hero-message {
+  margin-top: 17px;
+
+  color: #666;
+
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.health-page .hero-details {
+  margin-top: 20px;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.health-page .hero-details > div {
+  min-width: 0;
+
+  padding: 14px 16px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+
+  background: #faf8ff;
+  border: 1px solid #ece4ff;
+  border-radius: 14px;
+}
+
+.health-page .hero-details svg {
+  color: #8b5cf6;
+}
+
+.health-page .hero-details strong {
+  color: #4d2d82;
+
+  font-size: 19px;
+}
+
+
+/* ======================================================
+   CONFIDENCE CARD
+====================================================== */
+
+.health-page .confidence-card {
+  width: 100%;
+  min-width: 0;
+
+  padding: 24px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background: #ffffff;
+
+  border: 1px solid #eee7ff;
+  border-radius: 22px;
+
+  box-shadow: 0 10px 26px rgba(117, 88, 196, 0.07);
+}
+
+.health-page .confidence-card h3 {
+  margin: 0 0 4px;
+
+  color: #4b2d82;
+
+  font-size: 27px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.health-page .gauge {
+  position: relative;
+
+  width: 100%;
+  height: 165px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.health-page .gauge-center {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+
+  text-align: center;
+}
+
+.health-page .gauge-center h2 {
+  margin: 0;
+
+  color: #8b5cf6;
+
+  font-size: 29px;
+}
+
+.health-page .gauge-center p {
+  margin: 3px 0 0;
+
+  color: #777;
+
+  font-size: 12px;
+}
+
+.health-page .confidence-text {
+  max-width: 310px;
+
+  margin-top: 2px;
+
+  color: #666;
+
+  font-size: 14px;
+  line-height: 1.55;
+  text-align: center;
+}
+
+
+/* ======================================================
+   SECTION HEADINGS
+====================================================== */
+
+.health-page .section-heading {
+  margin-bottom: 20px;
+}
+
+.health-page .section-heading h2 {
+  margin: 0 0 7px;
+
+  color: #3b206b;
+
+  font-size: 29px;
+  font-weight: 800;
+}
+
+.health-page .section-heading p {
+  margin: 0;
+
+  color: #6b7280;
+
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+
+/* ======================================================
+   METRICS
+====================================================== */
+
+.health-page .metrics-section {
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+
+  margin: 0 0 26px;
+}
+
+.health-page .metric-card {
+  min-width: 0;
+
+  padding: 22px;
+
+  background: #ffffff;
+
+  border: 1px solid #eee7ff;
+  border-radius: 20px;
+
+  box-shadow: 0 10px 26px rgba(117, 88, 196, 0.07);
+
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.health-page .metric-card:hover {
+  transform: translateY(-4px);
+
+  box-shadow: 0 16px 34px rgba(117, 88, 196, 0.12);
+}
+
+.health-page .metric-card svg {
+  color: #8b5cf6;
+
+  margin-bottom: 13px;
+}
+
+.health-page .metric-card span {
+  display: block;
+
+  color: #666;
+
+  font-size: 15px;
+}
+
+.health-page .metric-card h2 {
+  margin: 8px 0 7px;
+
+  color: #40246f;
+
+  font-size: 29px;
+  font-weight: 800;
+}
+
+.health-page .metric-card p {
+  margin: 0;
+
+  color: #8b8b8b;
+
+  font-size: 14px;
+}
+
+
+/* ======================================================
+   XAI / EXPLAINABLE AI
+====================================================== */
+
+.health-page .risk-section {
+  width: 100%;
+
+  margin-bottom: 28px;
+  padding: 30px 32px;
+
+  background: #ffffff;
+
+  border: 1px solid #eee7ff;
+  border-radius: 24px;
+
+  box-shadow: 0 12px 32px rgba(117, 88, 196, 0.07);
+
+  animation: healthFadeUp 0.5s ease;
+}
+
+.health-page .risk-section .section-heading {
+  margin-bottom: 17px;
+}
+
+.health-page .risk-section .section-heading h2 {
+  font-size: 27px;
+}
+
+.health-page .risk-section .section-heading p {
+  max-width: 1050px;
+
+  font-size: 15px;
+}
+
+.health-page .xai-info {
+  width: 100%;
+
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+
+  padding: 13px 16px;
+  margin-bottom: 22px;
+
+  background: #f7f2ff;
+
+  border: 1px solid #e8dcff;
+  border-radius: 14px;
+
+  color: #63448e;
+
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.health-page .xai-info svg {
+  flex-shrink: 0;
+
+  margin-top: 2px;
+
+  color: #8b5cf6;
+}
+
+.health-page .negative-info {
+  background: #f7f5fc;
+  border-color: #e6def4;
+  color: #665b78;
+}
+
+.health-page .negative-info svg {
+  color: #7653b8;
+}
+
+.health-page .negative-risk-section {
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    #fcfaff 100%
+  );
+}
+
+
+/* XAI FACTORS */
+
+.health-page .risk-bars {
+  display: flex;
+  flex-direction: column;
+
+  gap: 20px;
+}
+
+.health-page .risk-item {
+  width: 100%;
+
+  transition: transform 0.2s ease;
+}
+
+.health-page .risk-item:hover {
+  transform: translateX(3px);
+}
+
+.health-page .risk-label {
+  margin-bottom: 8px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+}
+
+.health-page .risk-label span {
+  color: #43316d;
+
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.health-page .risk-label strong {
+  flex-shrink: 0;
+
+  color: #8b5cf6;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.health-page .progress {
+  width: 100%;
+  height: 11px;
+
+  overflow: hidden;
+
+  background: #eee9fa;
+
+  border-radius: 50px;
+}
+
+.health-page .progress-fill {
+  height: 100%;
+  min-width: 5%;
+
+  border-radius: 50px;
+
+  transition: width 0.7s ease;
+}
+
+.health-page .progress-fill.purple {
+  background: linear-gradient(
+    90deg,
+    #c8a2ff,
+    #8b5cf6
+  );
+}
+
+.health-page .progress-fill.negative {
+  background: linear-gradient(
+    90deg,
+    #c8b8e8,
+    #7653b8
+  );
+}
+
+.health-page .xai-percentage {
+  margin-top: 6px;
+
+  color: #657272;
+
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.health-page .xai-empty {
+  width: 100%;
+
+  padding: 17px;
+
+  background: #faf8ff;
+
+  border: 1px solid #eee7ff;
+  border-radius: 14px;
+
+  color: #777;
+
+  font-size: 14px;
+  text-align: center;
+}
+
+
+/* ======================================================
+   RECOMMENDATIONS
+====================================================== */
+
+.health-page .recommend-section {
+  width: 100%;
+
+  margin-bottom: 28px;
+}
+
+.health-page .recommend-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 18px;
+}
+
+.health-page .recommend-card {
+  padding: 24px;
+
+  background: #ffffff;
+
+  border: 1px solid #eee7ff;
+  border-radius: 22px;
+
+  box-shadow: 0 12px 32px rgba(117, 88, 196, 0.07);
+
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.health-page .recommend-card:hover {
+  transform: translateY(-5px);
+
+  box-shadow: 0 18px 38px rgba(117, 88, 196, 0.12);
+}
+
+.health-page .recommend-icon {
+  width: 54px;
+  height: 54px;
+
+  margin-bottom: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #f3eeff;
+  color: #8b5cf6;
+
+  border-radius: 16px;
+}
+
+.health-page .recommend-card h3 {
+  margin: 0 0 10px;
+
+  color: #43256d;
+
+  font-size: 20px;
+}
+
+.health-page .recommend-card p {
+  margin: 0;
+
+  color: #666;
+
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+
+/* ======================================================
+   SYMPTOMS
+====================================================== */
+
+.health-page .symptom-section {
+  width: 100%;
+
+  margin-bottom: 28px;
+}
+
+.health-page .symptom-list {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 12px;
+}
+
+.health-page .symptom-chip {
+  padding: 11px 17px;
+
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  background: #ffffff;
+
+  border: 1px solid #ebe4ff;
+  border-radius: 50px;
+
+  color: #52357d;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  box-shadow: 0 7px 18px rgba(117, 88, 196, 0.06);
+}
+
+.health-page .symptom-chip svg {
+  color: #8b5cf6;
+}
+
+
+/* ======================================================
+   AI SUMMARY
+====================================================== */
+
+.health-page .note-section {
+  margin-bottom: 28px;
+}
+
+.health-page .note-card {
+  padding: 27px;
+
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+
+  background: linear-gradient(
+    135deg,
+    #f8f4ff,
+    #ffffff
+  );
+
+  border: 1px solid #ece4ff;
+  border-radius: 23px;
+
+  box-shadow: 0 12px 32px rgba(117, 88, 196, 0.07);
+}
+
+.health-page .note-card svg {
+  min-width: 28px;
+
+  color: #8b5cf6;
+}
+
+.health-page .note-card h3 {
+  margin: 0 0 9px;
+
+  color: #43256d;
+
+  font-size: 21px;
+}
+
+.health-page .note-card p {
+  margin: 0;
+
+  color: #666;
+
+  line-height: 1.75;
+}
+
+.health-page .note-card strong {
+  color: #6d3df0;
+}
+
+
+/* ======================================================
+   ACTION BUTTONS
+====================================================== */
+
+.health-page .bottom-actions {
+  width: 100%;
+
+  margin: 30px 0 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 14px;
+}
+
+.health-page .bottom-actions button {
+  padding: 13px 22px;
+
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  border: none;
+  border-radius: 13px;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: transform 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.health-page .back-btn {
+  background: #ece8ff;
+  color: #56389a;
+}
+
+.health-page .back-btn:hover {
+  background: #ddd3ff;
+  transform: translateY(-2px);
+}
+
+.health-page .dashboard-btn {
+  background: #8b5cf6;
+  color: #ffffff;
+}
+
+.health-page .dashboard-btn:hover {
+  background: #7342e6;
+  transform: translateY(-2px);
+}
+
+.health-page .pdf-btn {
+  background: #3b206b;
+  color: #ffffff;
+}
+
+.health-page .pdf-btn:hover {
+  background: #2b164e;
+  transform: translateY(-2px);
+}
+
+
+/* ======================================================
+   ANIMATION
+====================================================== */
+
+@keyframes healthFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* ======================================================
+   RESPONSIVE
+====================================================== */
+
+@media (max-width: 1100px) {
+  .health-page .hero-section {
+    grid-template-columns: 1fr;
+  }
+
+  .health-page .metrics-section {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .health-page .recommend-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .health-page {
+    padding: 16px;
+  }
+
+  .health-page .hero-card,
+  .health-page .confidence-card {
+    padding: 22px;
+  }
+
+  .health-page .hero-card h1 {
+    font-size: 29px;
+  }
+
+  .health-page .risk-score {
+    font-size: 47px;
+  }
+
+  .health-page .hero-details,
+  .health-page .metrics-section {
+    grid-template-columns: 1fr;
+  }
+
+  .health-page .risk-section {
+    padding: 24px 20px;
+  }
+
+  .health-page .risk-label {
+    align-items: flex-start;
+    flex-direction: column;
+
+    gap: 4px;
+  }
+
+  .health-page .risk-label span {
+    font-size: 15px;
+  }
+
+  .health-page .note-card {
+    flex-direction: column;
+  }
+
+  .health-page .bottom-actions {
+    flex-direction: column;
+  }
+
+  .health-page .bottom-actions button {
+    width: 100%;
+    justify-content: center;
+  }
+}
