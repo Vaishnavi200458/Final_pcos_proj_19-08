@@ -27,6 +27,7 @@ function AIDashboard({
   onAboutClick,
   onProfileClick,
   onLogout,
+  onMealAnalyzerClick,
 }) {
   const [history, setHistory] = useState([]);
 
@@ -150,6 +151,7 @@ function AIDashboard({
        onAboutClick={onAboutClick}
        onProfileClick={onProfileClick}
        onLogout={onLogout}
+       onMealAnalyzerClick={onMealAnalyzerClick}
       />
 
       <section className="dashboard-welcome">

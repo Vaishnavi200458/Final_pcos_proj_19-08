@@ -20,6 +20,7 @@ export default function AboutUs({
   onAboutClick,
   onProfileClick,
   onLogout,
+  onMealAnalyzerClick,
 }) {
   return (
     <div className="about-wrapper">
@@ -63,6 +64,7 @@ export default function AboutUs({
          onAboutClick={onAboutClick}
          onProfileClick={onProfileClick}
          onLogout={onLogout}
+         onMealAnalyzerClick={onMealAnalyzerClick}
         />
       )}
 

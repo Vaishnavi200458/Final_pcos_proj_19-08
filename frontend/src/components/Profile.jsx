@@ -24,6 +24,7 @@ function Profile({
   onAboutClick,
   onProfileClick,
   onLogout,
+  onMealAnalyzerClick,
 }) {
   const userName =
     user?.user_metadata?.full_name ||
@@ -156,6 +157,7 @@ const handleChangePassword = async () => {
         onPredictClick={onPredictClick}
         onHealthSummaryClick={onHealthSummaryClick}
         onRecordsClick={onRecordsClick}
+        onMealAnalyzerClick={onMealAnalyzerClick}
         onAboutClick={onAboutClick}
         onProfileClick={onProfileClick}
         onLogout={onLogout}

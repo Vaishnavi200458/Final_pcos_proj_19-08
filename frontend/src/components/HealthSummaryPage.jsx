@@ -42,6 +42,7 @@ export default function HealthSummaryPage({
   onAboutClick,
   onProfileClick,
   onLogout,
+  onMealAnalyzerClick,
 }) {
 if (!result) {
 return (
@@ -957,6 +958,7 @@ return (
       onAboutClick={onAboutClick}
       onProfileClick={onProfileClick}
       onLogout={onLogout}
+      onMealAnalyzerClick={onMealAnalyzerClick}
     />
     <div className="health-page">
 

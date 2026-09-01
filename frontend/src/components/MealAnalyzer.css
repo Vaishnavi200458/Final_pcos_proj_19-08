@@ -1,0 +1,1161 @@
+/* =========================================================
+   MEAL ANALYZER PAGE
+   ========================================================= */
+
+.meal-analyzer-page,
+.meal-analyzer-page * {
+    box-sizing: border-box;
+}
+
+.meal-analyzer-page {
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+
+    overflow-x: hidden;
+
+    background:
+        linear-gradient(
+            135deg,
+            #faf8ff 0%,
+            #f6f2fc 48%,
+            #fbf9fd 100%
+        );
+
+    color: #302a3a;
+
+    font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+}
+
+
+/* =========================================================
+   MAIN WRAPPER
+   ========================================================= */
+
+.meal-analyzer-wrapper {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow-x: hidden;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.meal-analyzer-header {
+    width: 100%;
+
+    padding:
+        24px
+        clamp(20px, 4vw, 60px)
+        36px;
+
+    border-bottom: 1px solid #e9e3f0;
+
+    background:
+        rgba(255, 255, 255, 0.7);
+
+    backdrop-filter: blur(12px);
+}
+
+
+/* =========================================================
+   BRAND
+   ========================================================= */
+
+.meal-analyzer-brand {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    margin-bottom: 42px;
+
+    color: #6551a0;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    letter-spacing: -0.01em;
+}
+
+.meal-analyzer-brand-icon {
+    width: 34px;
+    height: 34px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 10px;
+
+    background: #ece6f9;
+
+    color: #7559b5;
+}
+
+
+/* =========================================================
+   HEADING
+   ========================================================= */
+
+.meal-analyzer-heading {
+    width: 100%;
+    max-width: 760px;
+}
+
+.meal-analyzer-eyebrow {
+    margin-bottom: 9px;
+
+    color: #826db0;
+
+    font-size: 10px;
+
+    font-weight: 750;
+
+    letter-spacing: 0.16em;
+}
+
+.meal-analyzer-heading h1 {
+    margin: 0;
+
+    color: #2e2738;
+
+    font-size:
+        clamp(34px, 5vw, 54px);
+
+    line-height: 1;
+
+    letter-spacing: -0.05em;
+
+    font-weight: 700;
+}
+
+.meal-analyzer-heading p {
+    width: 100%;
+    max-width: 560px;
+
+    margin:
+        14px
+        0
+        0;
+
+    color: #82798e;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+   ========================================================= */
+
+.meal-analyzer-content {
+    width: 100%;
+    max-width: 1100px;
+
+    flex: 1;
+
+    margin: 0 auto;
+
+    padding:
+        36px
+        clamp(20px, 4vw, 60px)
+        50px;
+}
+
+
+/* =========================================================
+   UPLOAD CARD
+   ========================================================= */
+
+.meal-upload-card {
+    width: 100%;
+
+    min-height: 330px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 35px 25px;
+
+    border:
+        1.5px
+        dashed
+        #d6cee3;
+
+    border-radius: 18px;
+
+    background:
+        rgba(255, 255, 255, 0.8);
+
+    text-align: center;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.meal-upload-card:hover {
+    border-color: #a794cf;
+
+    background: #ffffff;
+
+    transform: translateY(-2px);
+}
+
+
+/* Upload icon */
+
+.meal-upload-icon {
+    width: 58px;
+    height: 58px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 18px;
+
+    border-radius: 16px;
+
+    background: #eee9f8;
+
+    color: #7657b3;
+}
+
+.meal-upload-card h2 {
+    margin: 0;
+
+    color: #373042;
+
+    font-size: 18px;
+
+    font-weight: 650;
+}
+
+.meal-upload-card p {
+    max-width: 420px;
+
+    margin:
+        8px
+        0
+        18px;
+
+    color: #8d8498;
+
+    font-size: 12px;
+
+    line-height: 1.6;
+}
+
+.meal-upload-button {
+    padding:
+        10px
+        17px;
+
+    border-radius: 8px;
+
+    background: #7656d6;
+
+    color: white;
+
+    font-size: 11px;
+
+    font-weight: 650;
+
+    box-shadow:
+        0 5px 15px
+        rgba(118, 86, 214, 0.18);
+}
+
+.meal-upload-formats {
+    margin-top: 12px;
+
+    color: #aaa1b2;
+
+    font-size: 9px;
+}
+
+
+/* =========================================================
+   PREVIEW SECTION
+   ========================================================= */
+
+.meal-preview-section {
+    width: 100%;
+
+    padding: 20px;
+
+    border:
+        1px solid
+        #e9e3ef;
+
+    border-radius: 16px;
+
+    background: white;
+
+    box-shadow:
+        0 8px 30px
+        rgba(68, 52, 95, 0.05);
+}
+
+.meal-preview-top {
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-bottom: 16px;
+}
+
+.meal-section-label {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #8874b0;
+
+    font-size: 8px;
+
+    font-weight: 750;
+
+    letter-spacing: 0.15em;
+}
+
+.meal-preview-top h2 {
+    margin: 0;
+
+    color: #332c3d;
+
+    font-size: 18px;
+}
+
+.meal-preview-top p {
+    max-width: 400px;
+
+    margin: 4px 0 0;
+
+    overflow: hidden;
+
+    color: #938a9d;
+
+    font-size: 10px;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   SECONDARY BUTTON
+   ========================================================= */
+
+.meal-secondary-button {
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: 6px;
+
+    padding:
+        8px
+        11px;
+
+    border:
+        1px
+        solid
+        #ddd6e8;
+
+    border-radius: 8px;
+
+    background: white;
+
+    color: #71677d;
+
+    font-size: 10px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease;
+}
+
+.meal-secondary-button:hover {
+    background: #f8f6fb;
+}
+
+
+/* =========================================================
+   IMAGE
+   ========================================================= */
+
+.meal-image-container {
+    width: 100%;
+
+    max-height: 480px;
+
+    overflow: hidden;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background: #f4f1f7;
+}
+
+.meal-preview-image {
+    display: block;
+
+    width: 100%;
+    max-width: 100%;
+
+    max-height: 480px;
+
+    object-fit: contain;
+
+    margin: 0 auto;
+}
+
+
+/* =========================================================
+   ANALYZE BUTTON
+   ========================================================= */
+
+.meal-analyze-button {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    margin-top: 13px;
+
+    padding:
+        12px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: #7656d6;
+
+    color: white;
+
+    font-size: 12px;
+
+    font-weight: 650;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease,
+        transform 0.15s ease;
+}
+
+.meal-analyze-button:hover:not(:disabled) {
+    background: #6747c4;
+
+    transform: translateY(-1px);
+}
+
+.meal-analyze-button:disabled {
+    opacity: 0.6;
+
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+   ERROR
+   ========================================================= */
+
+.meal-error {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    margin-top: 13px;
+
+    padding:
+        10px
+        12px;
+
+    border-radius: 8px;
+
+    background: #fff1f1;
+
+    color: #b25252;
+
+    font-size: 10px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   ANALYSIS
+   ========================================================= */
+
+.meal-analysis-section {
+    width: 100%;
+
+    padding: 22px;
+
+    border:
+        1px
+        solid
+        #e9e3ef;
+
+    border-radius: 16px;
+
+    background: white;
+
+    box-shadow:
+        0 8px 30px
+        rgba(68, 52, 95, 0.05);
+}
+
+
+/* =========================================================
+   ANALYSIS HEADING
+   ========================================================= */
+
+.meal-analysis-heading {
+    width: 100%;
+
+    display: flex;
+
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding-bottom: 18px;
+
+    border-bottom:
+        1px
+        solid
+        #eee9f2;
+}
+
+.meal-analysis-heading h2 {
+    max-width: 700px;
+
+    margin: 3px 0 0;
+
+    overflow-wrap: anywhere;
+
+    color: #30293a;
+
+    font-size: 22px;
+
+    line-height: 1.2;
+
+    letter-spacing: -0.025em;
+}
+
+
+/* =========================================================
+   RATING
+   ========================================================= */
+
+.meal-rating {
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: 6px;
+
+    padding:
+        7px
+        10px;
+
+    border-radius: 7px;
+
+    background: #eeeaf7;
+
+    color: #69519c;
+
+    font-size: 9px;
+
+    font-weight: 650;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   ANALYSIS BLOCKS
+   ========================================================= */
+
+.meal-analysis-block {
+    width: 100%;
+
+    padding:
+        19px
+        0;
+
+    border-bottom:
+        1px
+        solid
+        #eee9f2;
+}
+
+.meal-block-heading {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    margin-bottom: 10px;
+
+    color: #7255aa;
+}
+
+.meal-block-heading h3 {
+    margin: 0;
+
+    color: #393141;
+
+    font-size: 13px;
+
+    font-weight: 650;
+}
+
+
+/* =========================================================
+   FOOD TAGS
+   ========================================================= */
+
+.meal-food-tags {
+    width: 100%;
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 6px;
+}
+
+.meal-food-tags span {
+    max-width: 100%;
+
+    padding:
+        6px
+        9px;
+
+    border-radius: 6px;
+
+    background: #f2eef8;
+
+    color: #655875;
+
+    font-size: 10px;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   LISTS
+   ========================================================= */
+
+.meal-analysis-list {
+    width: 100%;
+
+    margin: 0;
+
+    padding-left: 19px;
+
+    color: #686070;
+
+    font-size: 11px;
+
+    line-height: 1.75;
+}
+
+.meal-analysis-list li {
+    margin-bottom: 5px;
+
+    overflow-wrap: anywhere;
+}
+
+.meal-positive-list li::marker {
+    color: #699875;
+}
+
+
+/* =========================================================
+   CONFIDENCE
+   ========================================================= */
+
+.meal-confidence {
+    display: flex;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 6px;
+
+    padding-top: 15px;
+
+    color: #93899d;
+
+    font-size: 9px;
+}
+
+.meal-confidence strong {
+    color: #675b75;
+
+    font-weight: 650;
+}
+
+
+/* =========================================================
+   DISCLAIMER
+   ========================================================= */
+
+.meal-disclaimer {
+    width: 100%;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 8px;
+
+    margin-top: 14px;
+
+    padding:
+        10px
+        11px;
+
+    border-radius: 8px;
+
+    background: #f7f5fa;
+
+    color: #817889;
+
+    font-size: 9px;
+
+    line-height: 1.55;
+}
+
+.meal-disclaimer svg {
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   ANALYZE ANOTHER
+   ========================================================= */
+
+.meal-analyze-another {
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    margin-top: 16px;
+
+    padding:
+        10px;
+
+    border:
+        1px
+        solid
+        #ddd6e8;
+
+    border-radius: 8px;
+
+    background: white;
+
+    color: #675b77;
+
+    font-size: 10px;
+
+    font-weight: 650;
+
+    cursor: pointer;
+
+    transition:
+        background 0.15s ease;
+}
+
+.meal-analyze-another:hover {
+    background: #f8f6fb;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.meal-analyzer-footer {
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding:
+        14px
+        clamp(20px, 4vw, 60px);
+
+    border-top:
+        1px
+        solid
+        #e9e3f0;
+
+    color: #a098a9;
+
+    font-size: 8px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+.meal-spin {
+    animation:
+        meal-spin 1s linear infinite;
+}
+
+@keyframes meal-spin {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .meal-analyzer-header {
+        padding:
+            22px
+            28px
+            32px;
+    }
+
+    .meal-analyzer-content {
+        max-width: 850px;
+
+        padding:
+            30px
+            28px
+            40px;
+    }
+
+    .meal-upload-card {
+        min-height: 300px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .meal-analyzer-page {
+        min-height: 100dvh;
+    }
+
+
+    /* Header */
+
+    .meal-analyzer-header {
+        padding:
+            18px
+            16px
+            26px;
+    }
+
+    .meal-analyzer-brand {
+        margin-bottom: 30px;
+
+        font-size: 13px;
+    }
+
+    .meal-analyzer-brand-icon {
+        width: 31px;
+        height: 31px;
+    }
+
+    .meal-analyzer-heading h1 {
+        font-size: 34px;
+
+        letter-spacing: -0.045em;
+    }
+
+    .meal-analyzer-heading p {
+        margin-top: 11px;
+
+        font-size: 12px;
+
+        line-height: 1.55;
+    }
+
+
+    /* Content */
+
+    .meal-analyzer-content {
+        width: 100%;
+
+        max-width: 100%;
+
+        padding:
+            20px
+            16px
+            30px;
+    }
+
+
+    /* Upload */
+
+    .meal-upload-card {
+        min-height: 280px;
+
+        padding:
+            28px
+            18px;
+
+        border-radius: 15px;
+    }
+
+    .meal-upload-icon {
+        width: 52px;
+        height: 52px;
+
+        margin-bottom: 15px;
+
+        border-radius: 14px;
+    }
+
+    .meal-upload-card h2 {
+        font-size: 17px;
+    }
+
+    .meal-upload-card p {
+        max-width: 280px;
+
+        margin:
+            7px
+            0
+            17px;
+
+        font-size: 11px;
+    }
+
+
+    /* Preview */
+
+    .meal-preview-section {
+        padding: 15px;
+
+        border-radius: 14px;
+    }
+
+    .meal-preview-top {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 12px;
+    }
+
+    .meal-preview-top h2 {
+        font-size: 17px;
+    }
+
+    .meal-preview-top p {
+        max-width: 100%;
+
+        font-size: 9px;
+    }
+
+    .meal-secondary-button {
+        width: 100%;
+
+        justify-content: center;
+    }
+
+
+    /* Image */
+
+    .meal-image-container {
+        max-height: 330px;
+
+        border-radius: 10px;
+    }
+
+    .meal-preview-image {
+        max-height: 330px;
+    }
+
+
+    /* Analysis */
+
+    .meal-analysis-section {
+        padding: 16px;
+
+        border-radius: 14px;
+    }
+
+    .meal-analysis-heading {
+        flex-direction: column;
+
+        gap: 12px;
+
+        padding-bottom: 16px;
+    }
+
+    .meal-analysis-heading h2 {
+        font-size: 20px;
+    }
+
+    .meal-rating {
+        align-self: flex-start;
+    }
+
+    .meal-analysis-block {
+        padding:
+            17px
+            0;
+    }
+
+    .meal-block-heading h3 {
+        font-size: 12px;
+    }
+
+    .meal-analysis-list {
+        font-size: 11px;
+
+        line-height: 1.7;
+
+        padding-left: 17px;
+    }
+
+
+    /* Footer */
+
+    .meal-analyzer-footer {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        padding:
+            14px
+            16px;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+    .meal-analyzer-header {
+        padding:
+            16px
+            13px
+            23px;
+    }
+
+    .meal-analyzer-content {
+        padding:
+            16px
+            12px
+            25px;
+    }
+
+    .meal-analyzer-heading h1 {
+        font-size: 30px;
+    }
+
+    .meal-upload-card {
+        min-height: 260px;
+
+        padding:
+            24px
+            14px;
+    }
+
+    .meal-preview-section,
+    .meal-analysis-section {
+        padding: 13px;
+    }
+
+    .meal-analysis-heading h2 {
+        font-size: 18px;
+    }
+
+}

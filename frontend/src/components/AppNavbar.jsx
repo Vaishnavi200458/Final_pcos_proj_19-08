@@ -139,6 +139,7 @@ function AppNavbar({
   onAboutClick,
   onProfileClick,
   onLogout,
+  onMealAnalyzerClick,
 }) {
   const userName =
     user?.user_metadata?.full_name ||
@@ -214,6 +215,14 @@ function AppNavbar({
           onClick={onRecordsClick}
         >
           My Records
+        </button>
+
+        <button
+          type="button"
+          className={currentPage === "meal-analyzer" ? "active-nav" : ""}
+         onClick={onMealAnalyzerClick}
+        >
+         Meal Analyzer
         </button>
 
         <button

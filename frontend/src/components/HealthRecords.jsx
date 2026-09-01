@@ -16,6 +16,7 @@ function HealthRecords({
   onAboutClick,
   onProfileClick,
   onLogout,
+  onMealAnalyzerClick,
 }) {
   const [records, setRecords] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -215,6 +216,7 @@ function HealthRecords({
        onAboutClick={onAboutClick}
        onLogout={onLogout}
        onProfileClick={onProfileClick}
+       onMealAnalyzerClick={onMealAnalyzerClick}
       />
 
       <section className="records-header">

@@ -511,6 +511,7 @@ import HealthSummaryPage from "./components/HealthSummaryPage";
 import { getLatestTrackerEntry } from "./api/trackerApi";
 import { predictPCOS } from "./api/pcosApi";
 import PCOSChatbot from "./components/PCOSChatbot";
+import MealAnalyzer from "./components/MealAnalyzer";
 
 import "./App.css";
 
@@ -685,6 +686,10 @@ function App() {
             onRecordsClick={() =>
               setCurrentPage("records")
             }
+
+            onMealAnalyzerClick={() =>
+             setCurrentPage("meal-analyzer")
+            }
             onAboutClick={() =>
               setCurrentPage("about")
             }
@@ -733,6 +738,9 @@ function App() {
           onProfileClick={() =>
             setCurrentPage("profile")
           }
+          onMealAnalyzerClick={() =>
+           setCurrentPage("meal-analyzer")
+          }
           onLogout={handleLogout}
         />
       )}
@@ -748,10 +756,45 @@ function App() {
          onPredictClick={() => setCurrentPage("predict")}
          onHealthSummaryClick={handleHealthSummaryClick}
          onRecordsClick={() => setCurrentPage("records")}
+         onMealAnalyzerClick={() => setCurrentPage("meal-analyzer")}
          onAboutClick={() => setCurrentPage("about")}
          onProfileClick={() => setCurrentPage("profile")}
          onLogout={handleLogout}
         />
+      )}
+
+      {currentPage === "meal-analyzer" && (
+       <div className="meal-analyzer-section">
+         <AppNavbar
+           user={user}
+           currentPage="meal-analyzer"
+           onDashboardClick={() =>
+           setCurrentPage("dashboard")
+           }
+           onPredictClick={() =>
+           setCurrentPage("predict")
+           }
+           onHealthSummaryClick={
+           handleHealthSummaryClick
+           }
+           onRecordsClick={() =>
+           setCurrentPage("records")
+           }
+           onMealAnalyzerClick={() =>
+           setCurrentPage("meal-analyzer")
+           }
+           onAboutClick={() =>
+           setCurrentPage("about")
+           }
+           onProfileClick={() =>
+           setCurrentPage("profile")
+           }
+           onLogout={handleLogout}
+      
+          />
+
+          <MealAnalyzer />
+        </div>
       )}
 
       {/* ================= MY RECORDS ================= */}
@@ -767,6 +810,10 @@ function App() {
           }
           onHealthSummaryClick={
             handleHealthSummaryClick
+          }
+
+          onMealAnalyzerClick={() =>
+           setCurrentPage("meal-analyzer")
           }
           onAboutClick={() =>
             setCurrentPage("about")
@@ -801,6 +848,9 @@ function App() {
           onProfileClick={() =>
             setCurrentPage("profile")
           }
+          onMealAnalyzerClick={() =>
+           setCurrentPage("meal-analyzer")
+          }
           onLogout={handleLogout}
         />
       )}
@@ -822,6 +872,9 @@ function App() {
           }
           onRecordsClick={() =>
             setCurrentPage("records")
+          }
+          onMealAnalyzerClick={() =>
+           setCurrentPage("meal-analyzer")
           }
           onAboutClick={() =>
             setCurrentPage("about")
