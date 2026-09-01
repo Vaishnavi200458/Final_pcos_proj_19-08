@@ -510,6 +510,7 @@ import HealthSummaryPage from "./components/HealthSummaryPage";
 
 import { getLatestTrackerEntry } from "./api/trackerApi";
 import { predictPCOS } from "./api/pcosApi";
+import PCOSChatbot from "./components/PCOSChatbot";
 
 import "./App.css";
 
@@ -839,6 +840,7 @@ function App() {
           Loading your latest health summary...
         </div>
       )}
+      <PCOSChatbot />
     </div>
   );
 }

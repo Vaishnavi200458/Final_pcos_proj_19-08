@@ -71,15 +71,21 @@
 #         )
 
 
-from fastapi import FastAPI, HTTPException
+import os
+import shutil
+
+from fastapi import FastAPI, HTTPException, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 
 from schemas import PCOSInput
 from model_utils import predict_pcos
 from xai_utils import explain_pcos_prediction
+from chatbot.rag import PCOSRAG
 
 
 app = FastAPI(title="PCOS Prediction API")
+# Initialize PCOS RAG chatbot
+rag = PCOSRAG()
 
 
 app.add_middleware(
@@ -122,6 +128,95 @@ def predict(data: PCOSInput):
 
     except Exception as error:
         print("Prediction backend error:")
+        print(type(error).__name__, str(error))
+
+        raise HTTPException(
+            status_code=500,
+            detail=f"{type(error).__name__}: {str(error)}",
+        )
+
+@app.post("/chat")
+async def chat(data: dict):
+    try:
+        question = data.get("question")
+
+        if not question or not question.strip():
+            raise HTTPException(
+                status_code=400,
+                detail="Please enter a question.",
+            )
+
+        print("Chatbot question received:")
+        print(question)
+
+        answer = rag.ask(question)
+
+        return {
+            "answer": answer
+        }
+
+    except HTTPException:
+        raise
+
+    except Exception as error:
+        print("Chatbot backend error:")
+        print(type(error).__name__, str(error))
+
+        raise HTTPException(
+            status_code=500,
+            detail=f"{type(error).__name__}: {str(error)}",
+        )
+
+@app.post("/upload")
+async def upload_pdf(file: UploadFile = File(...)):
+    try:
+        # Only allow PDF files
+        if not file.filename.lower().endswith(".pdf"):
+            raise HTTPException(
+                status_code=400,
+                detail="Only PDF files are allowed.",
+            )
+
+        # Create upload folder if it does not exist
+        upload_dir = os.path.join(
+            os.path.dirname(__file__),
+            "uploads",
+            "pdfs",
+        )
+
+        os.makedirs(upload_dir, exist_ok=True)
+
+        # Save uploaded PDF
+        file_path = os.path.join(
+            upload_dir,
+            file.filename,
+        )
+
+        with open(file_path, "wb") as buffer:
+            shutil.copyfileobj(
+                file.file,
+                buffer,
+            )
+
+        print(f"Uploaded PDF saved: {file_path}")
+
+        # Add PDF contents to the chatbot knowledge base
+        chunks = rag.add_pdf(file_path)
+
+        print(
+            f"Uploaded PDF added to knowledge base: {chunks} chunks"
+        )
+
+        return {
+            "message": f"{file.filename} uploaded successfully",
+            "chunks": chunks,
+        }
+
+    except HTTPException:
+        raise
+
+    except Exception as error:
+        print("PDF upload error:")
         print(type(error).__name__, str(error))
 
         raise HTTPException(
