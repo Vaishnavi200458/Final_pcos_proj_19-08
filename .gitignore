@@ -36,3 +36,7 @@ Thumbs.db
 # Chatbot generated data
 backend/chroma_db/
 backend/uploads/
+
+# Private user medical documents and vector database
+backend/user_documents/
+backend/user_chroma_db/

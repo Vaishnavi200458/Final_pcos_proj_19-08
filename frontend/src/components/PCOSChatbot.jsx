@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import ReactMarkdown from "react-markdown";
+import { supabase } from "../supabaseClient";
 
 import {
     Bot,
@@ -16,6 +17,18 @@ import "./PCOSChatbot.css";
 
 
 const API_URL = "http://localhost:8000";
+
+const getAuthHeaders = async () => {
+    const { data, error } = await supabase.auth.getSession();
+
+    if (error || !data.session?.access_token) {
+        throw new Error("Please log in again to use the chatbot.");
+    }
+
+    return {
+        Authorization: `Bearer ${data.session.access_token}`,
+    };
+};
 
 
 function PCOSChatbot() {
@@ -169,14 +182,17 @@ function PCOSChatbot() {
 
         try {
 
-            const response =
-                await axios.post(
-                    `${API_URL}/chat`,
-                    {
-                        question:
-                            currentQuestion
-                    }
-                );
+            const headers = await getAuthHeaders();
+
+            const response = await axios.post(
+                `${API_URL}/chat`,
+                {
+                    question: currentQuestion
+                },
+                {
+                    headers
+                }
+            );
 
 
             console.log(
@@ -298,21 +314,15 @@ function PCOSChatbot() {
         // Validate PDF
         // --------------------------------------------------
 
-        if (
-            file.type !== "application/pdf" &&
-            !file.name
-                .toLowerCase()
-                .endsWith(".pdf")
-        ) {
+        const allowedExtensions = [".pdf", ".jpg", ".jpeg", ".png", ".webp"];
 
-            alert(
-                "Please select a PDF file."
-            );
+        const isValidFile = allowedExtensions.some((ext) =>
+            file.name.toLowerCase().endsWith(ext)
+        );
 
-            event.target.value = "";
-
+        if (!isValidFile) {
+            alert("Please upload a PDF, JPG, JPEG, PNG, or WebP file.");
             return;
-
         }
 
 
@@ -334,11 +344,15 @@ function PCOSChatbot() {
 
         try {
 
-            const response =
-                await axios.post(
-                    `${API_URL}/upload`,
-                    formData
-                );
+            const headers = await getAuthHeaders();
+
+            const response = await axios.post(
+                `${API_URL}/upload`,
+                formData,
+                {
+                    headers
+                }
+            );
 
 
             console.log(
@@ -777,15 +791,15 @@ function PCOSChatbot() {
                             {message.role ===
                                 "assistant" && (
 
-                                <div className="pcos-message-avatar">
+                                    <div className="pcos-message-avatar">
 
-                                    <Bot
-                                        size={16}
-                                    />
+                                        <Bot
+                                            size={16}
+                                        />
 
-                                </div>
+                                    </div>
 
-                            )}
+                                )}
 
 
                             <div className="pcos-message-content">
@@ -936,7 +950,7 @@ function PCOSChatbot() {
                     <input
                         ref={fileInputRef}
                         type="file"
-                        accept=".pdf,application/pdf"
+                        accept=".pdf,.jpg,.jpeg,.png,.webp,application/pdf,image/jpeg,image/png,image/webp"
                         onChange={uploadPDF}
                         className="pcos-hidden-file-input"
                     />
@@ -972,8 +986,8 @@ function PCOSChatbot() {
                             uploading ||
                             loading
                         }
-                        aria-label="Upload PDF"
-                        title="Upload PDF"
+                        aria-label="Upload Document"
+                        title="Upload Document"
                     >
 
                         {uploading ? (

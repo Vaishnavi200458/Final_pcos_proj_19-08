@@ -76,7 +76,7 @@ import shutil
 import json
 import time
 
-from fastapi import FastAPI, HTTPException, UploadFile, File
+from fastapi import FastAPI, HTTPException, UploadFile, File, Depends
 from fastapi.middleware.cors import CORSMiddleware
 
 from schemas import PCOSInput
@@ -86,6 +86,10 @@ from chatbot.rag import PCOSRAG
 from google import genai
 from google.genai import types
 from dotenv import load_dotenv
+from chatbot.auth import get_current_user_id
+from chatbot.private_store import PrivateDocumentStore
+from uuid import uuid4
+from chatbot.image_processor import image_to_documents
 
 load_dotenv()
 
@@ -104,6 +108,7 @@ meal_client = genai.Client(
 app = FastAPI(title="PCOS Prediction API")
 # Initialize PCOS RAG chatbot
 rag = PCOSRAG()
+private_store = PrivateDocumentStore()
 
 
 app.add_middleware(
@@ -154,7 +159,10 @@ def predict(data: PCOSInput):
         )
 
 @app.post("/chat")
-async def chat(data: dict):
+async def chat(
+    data: dict,
+    user_id: str = Depends(get_current_user_id),
+):
     try:
         question = data.get("question")
 
@@ -167,7 +175,31 @@ async def chat(data: dict):
         print("Chatbot question received:")
         print(question)
 
-        answer = rag.ask(question)
+        private_docs = private_store.get_user_documents(
+         user_id=user_id,
+         question=question,
+        )
+        
+        if private_docs:
+             private_context = "\n\n".join(
+             doc.page_content for doc in private_docs
+        )
+
+             combined_question = f"""
+             User's question:
+             {question}
+
+             Relevant information from the user's uploaded medical documents:
+             {private_context}
+
+             Use this information when answering the user's question.
+             If the documents do not contain the answer, do not invent details.
+             """
+
+             answer = rag.ask(combined_question)
+        else:
+             answer = rag.ask(question)
+
 
         return {
             "answer": answer
@@ -185,41 +217,124 @@ async def chat(data: dict):
             detail=f"{type(error).__name__}: {str(error)}",
         )
 
+SUPPORTED_UPLOAD_TYPES = {
+    ".pdf": "application/pdf",
+    ".jpg": "image/jpeg",
+    ".jpeg": "image/jpeg",
+    ".png": "image/png",
+    ".webp": "image/webp",
+}
+
+MAX_DOCUMENT_SIZE = 10 * 1024 * 1024
+
 @app.post("/upload")
-async def upload_pdf(file: UploadFile = File(...)):
+async def upload_pdf(
+    file: UploadFile = File(...),
+    user_id: str = Depends(get_current_user_id),
+):
     try:
-        # Only allow PDF files
-        if not file.filename.lower().endswith(".pdf"):
+        # Validate supported document formats
+        extension = os.path.splitext(file.filename or "")[1].lower()
+
+        if extension not in SUPPORTED_UPLOAD_TYPES:
             raise HTTPException(
                 status_code=400,
-                detail="Only PDF files are allowed.",
+                detail="Only PDF, JPG, JPEG, PNG, and WebP files are allowed.",
             )
 
         # Create upload folder if it does not exist
         upload_dir = os.path.join(
-            os.path.dirname(__file__),
-            "uploads",
-            "pdfs",
+         os.path.dirname(__file__),
+         "user_documents",
+         user_id,
         )
 
         os.makedirs(upload_dir, exist_ok=True)
 
-        # Save uploaded PDF
-        file_path = os.path.join(
-            upload_dir,
-            file.filename,
-        )
+        
+        # Read uploaded PDF
+        content = await file.read()
+
+        # Check file size (maximum 10 MB)
+        MAX_PDF_SIZE = 10 * 1024 * 1024
+
+        if len(content) > MAX_PDF_SIZE:
+            raise HTTPException(
+                status_code=413,
+                detail="PDF file is too large. Maximum allowed size is 10 MB."
+            )
+
+        
+        # Validate the uploaded file's format
+        if extension == ".pdf":
+            valid_file = content.startswith(b"%PDF-")
+
+        elif extension in [".jpg", ".jpeg"]:
+            valid_file = content.startswith(b"\xff\xd8\xff")
+
+        elif extension == ".png":
+            valid_file = content.startswith(b"\x89PNG\r\n\x1a\n")
+
+        elif extension == ".webp":
+            valid_file = (
+                content.startswith(b"RIFF")
+                and content[8:12] == b"WEBP"
+            )
+
+        else:
+            valid_file = False
+
+        if not valid_file:
+            raise HTTPException(
+                status_code=400,
+                detail="Invalid file. Please upload a valid PDF, JPG, PNG, or WebP."
+            )
+
+        # Save uploaded PDF with a unique filename
+        safe_filename = f"{uuid4().hex}{extension}"
+        file_path = os.path.join(upload_dir, safe_filename)
 
         with open(file_path, "wb") as buffer:
-            shutil.copyfileobj(
-                file.file,
-                buffer,
-            )
+            buffer.write(content)
 
         print(f"Uploaded PDF saved: {file_path}")
 
         # Add PDF contents to the chatbot knowledge base
-        chunks = rag.add_pdf(file_path)
+        from chatbot.pdf_processor import load_and_split_pdf
+
+        if extension == ".pdf":
+            # Extract text from a PDF
+            documents = load_and_split_pdf(file_path)
+
+        else:
+            # Extract text from a medical document image using Gemini
+            documents = image_to_documents(
+                image_bytes=content,
+                mime_type=SUPPORTED_UPLOAD_TYPES[extension],
+                filename=file.filename,
+            )
+
+        # Remove empty document chunks
+        documents = [
+            doc for doc in documents
+            if doc.page_content.strip()
+        ]
+
+        # Reject PDFs with no readable text
+        if not documents:
+            os.remove(file_path)
+            raise HTTPException(
+                status_code=400,
+                detail=(
+                    "No readable text found in this PDF. "
+                    "Please upload a text-based PDF."
+                ),
+            )
+
+        chunks = private_store.add_user_documents(
+            user_id=user_id,
+            documents=documents,
+        )
 
         print(
             f"Uploaded PDF added to knowledge base: {chunks} chunks"
