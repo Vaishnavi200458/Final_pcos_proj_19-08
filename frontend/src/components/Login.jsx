@@ -11,6 +11,7 @@ export default function Login({
   onSubmit,
   onSwitchToSignup,
   onSwitchToAboutUs,
+  onForgotPassword,
   isLoading
 }) {
   const [showPassword, setShowPassword] = useState(false);
@@ -63,7 +64,7 @@ export default function Login({
             <div className="login-mobile-logo">
               <span className="login-logo-text">PCOSense</span>
             </div>
-           
+
             <div className="login-welcome-box">
               <h1>Welcome Back</h1>
               <p>Please enter your details to sign in.</p>
@@ -100,13 +101,26 @@ export default function Login({
                     type="button"
                     onClick={() => setShowPassword((prev) => !prev)}
                   >
-                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                   </button>
-                    
+
                 </div>
               </div>
               <div className="login-forgot-box">
-                <a className="login-forgot-link" href="#">Forgot Password?</a>
+                <button
+                  type="button"
+                  className="login-forgot-link"
+                  onClick={onForgotPassword}
+                  style={{
+                    background: "none",
+                    border: "none",
+                    padding: 0,
+                    cursor: "pointer",
+                    font: "inherit",
+                  }}
+                >
+                  Forgot Password?
+                </button>
               </div>
               <button
                 className="login-submit-btn"

@@ -107,6 +107,7 @@ import { supabase } from "../supabaseClient";
 import Login from "./Login";
 import Signup from "./Signup";
 import AboutUs from "./AboutUs";
+import ForgotPassword from "./ForgotPassword";
 
 function AuthPage({ setUser }) {
   const [view, setView] = useState("login");
@@ -233,6 +234,15 @@ function AuthPage({ setUser }) {
     );
   }
 
+  if (view === "forgot-password") {
+    return (
+      <ForgotPassword
+        initialEmail={email}
+        onBackToLogin={() => setView("login")}
+      />
+    );
+  }
+
   if (view === "login") {
     return (
       <Login
@@ -246,6 +256,7 @@ function AuthPage({ setUser }) {
           setView("signup");
         }}
         onSwitchToAboutUs={() => setView("about")}
+        onForgotPassword={() => setView("forgot-password")}
         isLoading={isLoading}
       />
     );

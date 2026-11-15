@@ -50,7 +50,7 @@
 
 //   return (
 //     <div className="app">
-      
+
 //       {currentPage === "predict" && (
 //         <>
 //           <header className="hero">
@@ -189,7 +189,7 @@
 //   return (
 //     <div className="app">
 
-      
+
 
 //       {!showDashboard && (
 //         <>
@@ -512,6 +512,7 @@ import { getLatestTrackerEntry } from "./api/trackerApi";
 import { predictPCOS } from "./api/pcosApi";
 import PCOSChatbot from "./components/PCOSChatbot";
 import MealAnalyzer from "./components/MealAnalyzer";
+import ResetPassword from "./components/ResetPassword";
 
 import "./App.css";
 
@@ -648,6 +649,14 @@ function App() {
   // PUBLIC PAGES
   // =========================================================
 
+  // =========================================================
+  // PUBLIC PAGES
+  // =========================================================
+
+  if (window.location.pathname === "/reset-password") {
+    return <ResetPassword />;
+  }
+
   if (!user && showLanding) {
     return (
       <LandingPage
@@ -688,7 +697,7 @@ function App() {
             }
 
             onMealAnalyzerClick={() =>
-             setCurrentPage("meal-analyzer")
+              setCurrentPage("meal-analyzer")
             }
             onAboutClick={() =>
               setCurrentPage("about")
@@ -739,7 +748,7 @@ function App() {
             setCurrentPage("profile")
           }
           onMealAnalyzerClick={() =>
-           setCurrentPage("meal-analyzer")
+            setCurrentPage("meal-analyzer")
           }
           onLogout={handleLogout}
         />
@@ -748,49 +757,49 @@ function App() {
       {/* ================= HEALTH SUMMARY ================= */}
 
       {currentPage === "health-summary" && (
-       <HealthSummaryPage
-         result={result}
-         user={user}
-         onBack={() => setCurrentPage("predict")}
-         onDashboard={() => setCurrentPage("dashboard")}
-         onPredictClick={() => setCurrentPage("predict")}
-         onHealthSummaryClick={handleHealthSummaryClick}
-         onRecordsClick={() => setCurrentPage("records")}
-         onMealAnalyzerClick={() => setCurrentPage("meal-analyzer")}
-         onAboutClick={() => setCurrentPage("about")}
-         onProfileClick={() => setCurrentPage("profile")}
-         onLogout={handleLogout}
+        <HealthSummaryPage
+          result={result}
+          user={user}
+          onBack={() => setCurrentPage("predict")}
+          onDashboard={() => setCurrentPage("dashboard")}
+          onPredictClick={() => setCurrentPage("predict")}
+          onHealthSummaryClick={handleHealthSummaryClick}
+          onRecordsClick={() => setCurrentPage("records")}
+          onMealAnalyzerClick={() => setCurrentPage("meal-analyzer")}
+          onAboutClick={() => setCurrentPage("about")}
+          onProfileClick={() => setCurrentPage("profile")}
+          onLogout={handleLogout}
         />
       )}
 
       {currentPage === "meal-analyzer" && (
-       <div className="meal-analyzer-section">
-         <AppNavbar
-           user={user}
-           currentPage="meal-analyzer"
-           onDashboardClick={() =>
-           setCurrentPage("dashboard")
-           }
-           onPredictClick={() =>
-           setCurrentPage("predict")
-           }
-           onHealthSummaryClick={
-           handleHealthSummaryClick
-           }
-           onRecordsClick={() =>
-           setCurrentPage("records")
-           }
-           onMealAnalyzerClick={() =>
-           setCurrentPage("meal-analyzer")
-           }
-           onAboutClick={() =>
-           setCurrentPage("about")
-           }
-           onProfileClick={() =>
-           setCurrentPage("profile")
-           }
-           onLogout={handleLogout}
-      
+        <div className="meal-analyzer-section">
+          <AppNavbar
+            user={user}
+            currentPage="meal-analyzer"
+            onDashboardClick={() =>
+              setCurrentPage("dashboard")
+            }
+            onPredictClick={() =>
+              setCurrentPage("predict")
+            }
+            onHealthSummaryClick={
+              handleHealthSummaryClick
+            }
+            onRecordsClick={() =>
+              setCurrentPage("records")
+            }
+            onMealAnalyzerClick={() =>
+              setCurrentPage("meal-analyzer")
+            }
+            onAboutClick={() =>
+              setCurrentPage("about")
+            }
+            onProfileClick={() =>
+              setCurrentPage("profile")
+            }
+            onLogout={handleLogout}
+
           />
 
           <MealAnalyzer />
@@ -813,7 +822,7 @@ function App() {
           }
 
           onMealAnalyzerClick={() =>
-           setCurrentPage("meal-analyzer")
+            setCurrentPage("meal-analyzer")
           }
           onAboutClick={() =>
             setCurrentPage("about")
@@ -849,7 +858,7 @@ function App() {
             setCurrentPage("profile")
           }
           onMealAnalyzerClick={() =>
-           setCurrentPage("meal-analyzer")
+            setCurrentPage("meal-analyzer")
           }
           onLogout={handleLogout}
         />
@@ -874,7 +883,7 @@ function App() {
             setCurrentPage("records")
           }
           onMealAnalyzerClick={() =>
-           setCurrentPage("meal-analyzer")
+            setCurrentPage("meal-analyzer")
           }
           onAboutClick={() =>
             setCurrentPage("about")
