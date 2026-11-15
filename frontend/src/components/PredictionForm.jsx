@@ -27,7 +27,7 @@ function PredictionForm({ setResult, user, onLogout, result }) {
     cycle_regular: "Regular",
     cycle_length: "",
     weight_gain: "No",
-    facial_hair_growth: "No",
+    hair_growth: "No",
     skin_darkening: "No",
     hair_loss: "No",
     pimples: "No",
@@ -91,8 +91,10 @@ function PredictionForm({ setResult, user, onLogout, result }) {
 
     setLoading(true);
 
+    const { fast_food_frequency, ...predictionFields } = formData;
+
     const finalData = {
-      ...formData,
+      ...predictionFields,
       age: Number(formData.age),
       weight: Number(formData.weight),
       height: Number(formData.height),
@@ -276,12 +278,12 @@ function PredictionForm({ setResult, user, onLogout, result }) {
               <div className="field-group">
                 <label>Facial Hair Growth</label>
                 <select
-                  name="facial_hair_growth"
-                  value={formData.facial_hair_growth}
+                  name="hair_growth"
+                  value={formData.hair_growth}
                   onChange={handleChange}
                 >
-                  <option>No</option>
-                  <option>Yes</option>
+                  <option value="No">No</option>
+                  <option value="Yes">Yes</option>
                 </select>
               </div>
 
