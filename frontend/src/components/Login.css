@@ -469,3 +469,427 @@
 }
 
 
+/* ==========================================
+   PCOSense - Modern Login Page Redesign
+   ========================================== */
+
+.login-wrapper {
+  background: #faf7ff;
+  color: #242128;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Header */
+.login-header {
+  background: rgba(255, 255, 255, 0.96);
+  border-bottom: 1px solid #f0eafb;
+  box-shadow: 0 4px 24px rgba(74, 35, 124, 0.04);
+}
+
+.login-logo-text {
+  color: #6829a0;
+  font-weight: 800;
+  letter-spacing: -0.8px;
+}
+
+.login-nav-btn {
+  color: #51465f;
+  font-weight: 500;
+}
+
+.login-signup-btn {
+  background: #7042ed;
+  color: #ffffff;
+  border: 1px solid #7042ed;
+  border-radius: 12px;
+  padding: 10px 24px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.login-signup-btn:hover {
+  background: #5e31d6;
+  color: #ffffff;
+  box-shadow: 0 6px 18px rgba(112, 66, 237, 0.18);
+}
+
+/* Main layout */
+.login-main {
+  gap: 24px;
+  padding: 88px 24px 24px;
+  align-items: stretch;
+}
+
+.login-left-section,
+.login-right-section {
+  min-width: 0;
+  border-radius: 28px;
+}
+
+/* Left branding panel */
+.login-left-section {
+  background: linear-gradient(
+    145deg,
+    #f0e8ff 0%,
+    #e9ddff 55%,
+    #f8f3ff 100%
+  );
+  padding: 48px;
+}
+
+.login-left-content {
+  max-width: 480px;
+  gap: 24px;
+}
+
+.login-image-box {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 24px;
+  padding: 18px;
+  box-shadow: 0 14px 40px rgba(89, 49, 146, 0.08);
+}
+
+.login-image-box img {
+  display: block;
+  max-height: 310px;
+  object-fit: contain;
+  border-radius: 18px;
+}
+
+.login-text-box {
+  gap: 12px;
+}
+
+.login-text-box h2 {
+  font-size: clamp(28px, 3vw, 38px);
+  font-weight: 800;
+  letter-spacing: -1px;
+  color: #34204e;
+}
+
+.login-text-box p {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #6c5a7b;
+}
+
+/* Right login panel */
+.login-right-section {
+  background: #ffffff;
+  padding: 56px 36px;
+  box-shadow: 0 10px 35px rgba(76, 43, 119, 0.06);
+  border: 1px solid #f0eafb;
+}
+
+.login-form-container {
+  max-width: 420px;
+  gap: 26px;
+}
+
+.login-welcome-box {
+  gap: 10px;
+}
+
+.login-welcome-box h1 {
+  font-size: clamp(30px, 3vw, 40px);
+  font-weight: 800;
+  letter-spacing: -1.2px;
+  color: #242128;
+}
+
+.login-welcome-box p {
+  font-size: 15px;
+  color: #82758e;
+  line-height: 1.6;
+}
+
+/* Form */
+.login-form {
+  gap: 20px;
+}
+
+.login-input-group {
+  gap: 9px;
+}
+
+.login-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #42354e;
+  margin-left: 0;
+}
+
+.login-input {
+  background: #ffffff;
+  border: 1px solid #e7ddf4;
+  border-radius: 12px;
+  padding: 15px 18px;
+  font-size: 14px;
+  color: #242128;
+}
+
+.login-input::placeholder {
+  color: #a59aad;
+}
+
+.login-input:hover {
+  border-color: #c8b1ec;
+}
+
+.login-input:focus {
+  border-color: #7042ed;
+  box-shadow: 0 0 0 4px rgba(112, 66, 237, 0.1);
+}
+
+.login-password-container .login-input {
+  padding-right: 52px;
+}
+
+.login-eye-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #81748e;
+}
+
+.login-eye-btn:hover {
+  color: #7042ed;
+}
+
+.login-forgot-link {
+  color: #7042ed;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Login button */
+.login-submit-btn {
+  background: #7042ed;
+  border: none;
+  border-radius: 12px;
+  padding: 16px;
+  margin-top: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  box-shadow: 0 8px 22px rgba(112, 66, 237, 0.18);
+  cursor: pointer;
+}
+
+.login-submit-btn:hover:not(:disabled) {
+  background: #5e31d6;
+  box-shadow: 0 12px 26px rgba(112, 66, 237, 0.24);
+  transform: translateY(-2px);
+}
+
+.login-submit-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.login-signup-prompt {
+  font-size: 13px;
+  color: #82758e;
+}
+
+.login-signup-prompt-btn {
+  color: #7042ed;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Responsive layout */
+@media (min-width: 768px) {
+  .login-left-section,
+  .login-right-section {
+    width: 50%;
+  }
+}
+
+@media (max-width: 767px) {
+  .login-main {
+    padding: 80px 16px 16px;
+    gap: 0;
+  }
+
+  .login-right-section {
+    padding: 40px 24px;
+    border-radius: 22px;
+    min-height: 65vh;
+  }
+
+  .login-form-container {
+    max-width: 100%;
+  }
+
+  .login-welcome-box h1 {
+    font-size: 30px;
+  }
+
+  .login-mobile-logo {
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 380px) {
+  .login-right-section {
+    padding: 32px 18px;
+  }
+}
+
+/* ==========================================
+   Login Page - Final Refinements
+   ========================================== */
+
+/* More balanced spacing */
+.login-left-content {
+  gap: 18px;
+}
+
+.login-text-box {
+  gap: 8px;
+}
+
+.login-text-box h2 {
+  margin: 0;
+}
+
+.login-text-box p {
+  margin: 0;
+}
+
+.login-image-box {
+  max-width: 440px;
+  width: 100%;
+  margin: 0 auto 12px;
+}
+
+.login-form-container {
+  gap: 20px;
+}
+
+.login-welcome-box {
+  gap: 8px;
+}
+
+.login-welcome-box h1,
+.login-welcome-box p {
+  margin: 0;
+}
+
+.login-form {
+  gap: 18px;
+}
+
+.login-signup-prompt {
+  margin: 0;
+}
+
+/* Fix the browser-default Sign up button */
+.login-signup-prompt-btn {
+  appearance: none;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin-left: 4px;
+  color: #7042ed;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.login-signup-prompt-btn:hover {
+  color: #5e31d6;
+  text-decoration: underline;
+}
+
+/* Responsive refinements */
+@media (min-width: 768px) {
+  .login-left-section {
+    padding: 36px;
+  }
+
+  .login-right-section {
+    padding: 40px 36px;
+  }
+}
+
+
+/* ==========================================
+   Login Page - Taller, Cleaner Layout
+   ========================================== */
+
+@media (min-width: 768px) {
+  .login-main {
+    min-height: 850px;
+    align-items: stretch;
+  }
+
+  .login-left-section,
+  .login-right-section {
+    border-radius: 16px;
+  }
+
+  .login-left-section {
+    padding: 60px 48px;
+  }
+
+  .login-right-section {
+    padding: 60px 48px;
+  }
+}
+
+/* Slightly less rounded illustration */
+.login-image-box {
+  border-radius: 16px;
+}
+
+.login-image-box img {
+  border-radius: 12px;
+}
+
+/* Consistent form corners */
+.login-input,
+.login-submit-btn {
+  border-radius: 10px;
+}
+
+
+/* ==========================================
+   Login Page - Seamless Split Layout
+   ========================================== */
+
+@media (min-width: 768px) {
+  .login-main {
+    gap: 0;
+    padding: 64px 0 0;
+    min-height: 850px;
+    align-items: stretch;
+  }
+
+  .login-left-section,
+  .login-right-section {
+    width: 50%;
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+  }
+
+  .login-left-section {
+    background: linear-gradient(
+      110deg,
+      #f0e5ff 0%,
+      #f2eaff 65%,
+      #f8f4ff 100%
+    );
+  }
+
+  .login-right-section {
+    background: linear-gradient(
+      90deg,
+      #f8f4ff 0%,
+      #ffffff 16%,
+      #ffffff 100%
+    );
+  }
+}
+

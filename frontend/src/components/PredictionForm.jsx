@@ -447,7 +447,7 @@ function PredictionForm({ setResult, user, onLogout, result }) {
         </div>
       </div>
 
-      <AppFooter />
+      
     </div>
   );
 }

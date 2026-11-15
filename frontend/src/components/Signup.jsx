@@ -3,8 +3,6 @@ import {
   Eye,
   EyeOff,
   Loader2,
-  ShieldCheck,
-  FileText,
   ArrowRight,
   Check,
   X
@@ -111,21 +109,7 @@ export default function Signup({
               confidence, clarity, and compassion.
             </p>
 
-            <div className="signup-badges">
-              <div className="signup-badge">
-                <div className="signup-badge-icon">
-                  <ShieldCheck size={20} />
-                </div>
-                <span className="signup-badge-text">HIPAA Compliant</span>
-              </div>
-
-              <div className="signup-badge">
-                <div className="signup-badge-icon">
-                  <FileText size={20} />
-                </div>
-                <span className="signup-badge-text">Evidence-Based</span>
-              </div>
-            </div>
+            
           </div>
         </section>
 
@@ -384,7 +368,7 @@ export default function Signup({
           <div className="signup-footer-left">
             <span>PCOSense</span>
             <p>
-              © 2024 PCOSense. Clinical decision support only. Not a substitute
+              © 2026 PCOSense. Clinical decision support only. Not a substitute
               for professional medical advice.
             </p>
           </div>

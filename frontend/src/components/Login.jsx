@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Eye, EyeOff, Loader2 } from 'lucide-react';
 import './Login.css';
+import './Signup.css';
 
 
 export default function Login({
@@ -148,19 +149,37 @@ export default function Login({
             </p>
           </div>
         </section>
+      </main>
 
 
         {/* Footer */}
-        <footer className="login-footer">
-          <div className="login-footer-content">
-            <p className="login-footer-text">© 2024 PCOSense. Clinical reliability for hormonal health.</p>
-            <div className="login-footer-links">
-              <a href="#">Privacy Policy</a>
-              <a href="#">Contact Support</a>
+        <footer className="signup-footer">
+          <div className="signup-footer-content">
+            <div className="signup-footer-left">
+              <span>PCOSense</span>
+              <p>
+                © 2026 PCOSense. Clinical decision support only. Not a substitute
+                for professional medical advice.
+              </p>
+            </div>
+
+            <div className="signup-footer-right">
+              <a className="signup-footer-link" href="#">
+                Privacy Policy
+              </a>
+              <a className="signup-footer-link" href="#">
+                Terms of Service
+              </a>
+              <a className="signup-footer-link" href="#">
+                Clinical Guidelines
+              </a>
+              <a className="signup-footer-link" href="#">
+                Contact Support
+              </a>
             </div>
           </div>
         </footer>
-      </main>
+      
     </div>
   );
 }
