@@ -1,5 +1,6 @@
 import os
 import uuid
+import time
 
 from dotenv import load_dotenv
 
@@ -9,7 +10,7 @@ from langchain_google_genai import (
 )
 
 from langchain_chroma import Chroma
-
+from groq import Groq
 from .pdf_processor import load_and_split_pdf
 
 
@@ -34,6 +35,22 @@ class PCOSRAG:
 
         self.llm = ChatGoogleGenerativeAI(
             model="gemini-3.6-flash"
+        )
+        
+        # -----------------------------------------
+        # Groq chatbot model
+        # -----------------------------------------
+
+        groq_api_key = os.getenv("GROQ_API_KEY")
+
+        self.groq_client = (
+            Groq(
+                api_key=groq_api_key,
+                timeout=20.0,
+                max_retries=0
+            )
+            if groq_api_key
+            else None
         )
 
         # -----------------------------------------
@@ -296,59 +313,95 @@ USER QUESTION:
 {question}
 """
 
+            
             # -----------------------------------------
-            # 4. Ask Gemini
+            # 4. Generate answer: Groq -> Gemini
             # -----------------------------------------
 
-            response = self.llm.invoke(
-                prompt
+            generation_start = time.perf_counter()
+            answer_text = None
+
+            # Try Groq first
+            if self.groq_client is not None:
+                try:
+                    print("Trying Groq chatbot...")
+
+                    groq_response = (
+                        self.groq_client.chat.completions.create(
+                            model="qwen/qwen3.8-27b",
+                            messages=[
+                                {
+                                    "role": "user",
+                                    "content": prompt,
+                                }
+                            ],
+                            temperature=0.2,
+                            max_completion_tokens=700,
+                        )
+                    )
+
+                    answer_text = (
+                        groq_response.choices[0].message.content
+                    )
+
+                    if not answer_text or not answer_text.strip():
+                        raise ValueError(
+                            "Groq returned an empty answer."
+                        )
+
+                    print("Groq chatbot response received.")
+
+                except Exception as error:
+                    print(
+                        "Groq chatbot failed:",
+                        type(error).__name__,
+                        str(error),
+                    )
+
+            # Fall back to Gemini
+            if not answer_text:
+                print("Trying Gemini chatbot fallback...")
+
+                gemini_response = self.llm.invoke(prompt)
+
+                content = gemini_response.content
+
+                if isinstance(content, str):
+                    answer_text = content
+
+                elif isinstance(content, list):
+                    text_parts = []
+
+                    for part in content:
+                        if isinstance(part, str):
+                            text_parts.append(part)
+                        elif isinstance(part, dict) and "text" in part:
+                            text_parts.append(str(part["text"]))
+                        elif hasattr(part, "text"):
+                            text_parts.append(str(part.text))
+
+                    answer_text = "\n".join(text_parts)
+
+                else:
+                    answer_text = str(content)
+
+                print("Gemini chatbot response received.")
+
+            generation_time = (
+                time.perf_counter() - generation_start
             )
 
             print(
-                "Gemini response received."
+                f"Chatbot generation time: "
+                f"{generation_time:.2f} seconds"
             )
+
 
             # -----------------------------------------
             # 5. Convert Gemini response to text
             # -----------------------------------------
 
-            content = response.content
-
-            if isinstance(content, str):
-
-                return content
-
-            if isinstance(content, list):
-
-                text_parts = []
-
-                for part in content:
-
-                    if isinstance(part, str):
-
-                        text_parts.append(
-                            part
-                        )
-
-                    elif isinstance(part, dict):
-
-                        if "text" in part:
-
-                            text_parts.append(
-                                str(part["text"])
-                            )
-
-                    elif hasattr(part, "text"):
-
-                        text_parts.append(
-                            str(part.text)
-                        )
-
-                return "\n".join(
-                    text_parts
-                )
-
-            return str(content)
+            return answer_text
 
         except Exception as e:
 

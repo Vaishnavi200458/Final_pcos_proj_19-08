@@ -102,7 +102,10 @@ if not GEMINI_API_KEY:
     )
 
 meal_client = genai.Client(
-    api_key=GEMINI_API_KEY
+    api_key=GEMINI_API_KEY,
+    http_options=types.HttpOptions(
+        timeout=5000
+    )
 )
 
 
@@ -170,6 +173,65 @@ def predict(data: PCOSInput):
             detail=f"{type(error).__name__}: {str(error)}",
         )
 
+# @app.post("/chat")
+# async def chat(
+#     data: dict,
+#     user_id: str = Depends(get_current_user_id),
+# ):
+#     try:
+#         question = data.get("question")
+
+#         if not question or not question.strip():
+#             raise HTTPException(
+#                 status_code=400,
+#                 detail="Please enter a question.",
+#             )
+
+#         print("Chatbot question received:")
+#         print(question)
+
+#         private_docs = private_store.get_user_documents(
+#          user_id=user_id,
+#          question=question,
+#         )
+        
+#         if private_docs:
+#              private_context = "\n\n".join(
+#              doc.page_content for doc in private_docs
+#         )
+
+#              combined_question = f"""
+#              User's question:
+#              {question}
+
+#              Relevant information from the user's uploaded medical documents:
+#              {private_context}
+
+#              Use this information when answering the user's question.
+#              If the documents do not contain the answer, do not invent details.
+#              """
+
+#              answer = rag.ask(combined_question)
+#         else:
+#              answer = rag.ask(question)
+
+
+#         return {
+#             "answer": answer
+#         }
+
+#     except HTTPException:
+#         raise
+
+#     except Exception as error:
+#         print("Chatbot backend error:")
+#         print(type(error).__name__, str(error))
+
+#         raise HTTPException(
+#             status_code=500,
+#             detail=f"{type(error).__name__}: {str(error)}",
+#         )
+
 @app.post("/chat")
 async def chat(
     data: dict,
@@ -187,31 +249,117 @@ async def chat(
         print("Chatbot question received:")
         print(question)
 
-        private_docs = private_store.get_user_documents(
-         user_id=user_id,
-         question=question,
-        )
+        total_start = time.perf_counter()
+
+        # ----------------------------------
+        # Step 1: Private document retrieval
+        # ----------------------------------
+
+        retrieval_start = time.perf_counter()
+
         
-        if private_docs:
-             private_context = "\n\n".join(
-             doc.page_content for doc in private_docs
+        # Detect questions referring to the most recent upload.
+        question_lower = question.lower()
+
+        latest_document_phrases = [
+            "just uploaded",
+            "recently uploaded",
+            "last uploaded",
+            "latest uploaded",
+            "most recent document",
+            "this image",
+            "this document",
+            "this report",
+            "this file",
+        ]
+
+        refers_to_latest = any(
+            phrase in question_lower
+            for phrase in latest_document_phrases
         )
 
-             combined_question = f"""
-             User's question:
-             {question}
+        if refers_to_latest:
+            print("Retrieving most recently uploaded document...")
 
-             Relevant information from the user's uploaded medical documents:
-             {private_context}
+            private_docs = private_store.get_latest_user_documents(
+                user_id=user_id
+            )
 
-             Use this information when answering the user's question.
-             If the documents do not contain the answer, do not invent details.
-             """
+            if not private_docs:
+                raise HTTPException(
+                    status_code=404,
+                    detail=(
+                        "No recent document with upload metadata was found. "
+                        "Please upload the document again."
+                    ),
+                )
 
-             answer = rag.ask(combined_question)
         else:
-             answer = rag.ask(question)
+            print("Performing normal document similarity search...")
 
+            private_docs = private_store.get_user_documents(
+                user_id=user_id,
+                question=question
+            )
+
+
+        retrieval_time = (
+            time.perf_counter() - retrieval_start
+        )
+
+        print(
+            f"Private document retrieval: "
+            f"{retrieval_time:.2f} seconds"
+        )
+
+        # ----------------------------------
+        # Step 2: Prepare question
+        # ----------------------------------
+
+        if private_docs:
+            private_context = "\n\n".join(
+                doc.page_content for doc in private_docs
+            )
+
+            combined_question = f"""
+            User's question:
+            {question}
+
+            Relevant information from the user's uploaded medical documents:
+            {private_context}
+
+            Use this information when answering the user's question.
+            If the documents do not contain the answer,
+            do not invent details.
+            """
+        else:
+            combined_question = question
+
+        # ----------------------------------
+        # Step 3: RAG + Gemini
+        # ----------------------------------
+
+        rag_start = time.perf_counter()
+
+        answer = rag.ask(combined_question)
+
+        rag_time = time.perf_counter() - rag_start
+
+        print(
+            f"RAG + Gemini response: "
+            f"{rag_time:.2f} seconds"
+        )
+
+        # ----------------------------------
+        # Step 4: Total time
+        # ----------------------------------
+
+        total_time = time.perf_counter() - total_start
+
+        print(
+            f"Total chatbot time: "
+            f"{total_time:.2f} seconds"
+        )
 
         return {
             "answer": answer
@@ -228,6 +376,7 @@ async def chat(
             status_code=500,
             detail=f"{type(error).__name__}: {str(error)}",
         )
+
 
 SUPPORTED_UPLOAD_TYPES = {
     ".pdf": "application/pdf",
