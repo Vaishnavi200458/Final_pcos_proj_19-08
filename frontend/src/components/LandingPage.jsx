@@ -21,7 +21,7 @@ export default function LandingPage({ onLogin }) {
       <nav className="navbar">
 
         <div className="logo">
-          PCOSCare
+          PCOSense
         </div>
 
         <div className="nav-links">
@@ -94,7 +94,7 @@ export default function LandingPage({ onLogin }) {
 
   <p className="features-subtitle">
     From early risk prediction to personalized health insights,
-    PCOSCare provides AI-powered tools to support your wellness journey.
+    PCOSense provides AI-powered tools to support your wellness journey.
   </p>
 
   <div className="cards">
@@ -259,7 +259,7 @@ export default function LandingPage({ onLogin }) {
 
   <p className="features-subtitle">
     From early risk prediction to personalized health insights,
-    PCOSCare provides AI-powered tools to support your wellness journey.
+    PCOSense provides AI-powered tools to support your wellness journey.
   </p>
 
   <div className="cards">
@@ -425,7 +425,7 @@ export default function LandingPage({ onLogin }) {
 </section>
 
       <footer>
-        © 2026 PCOSCare | Manasvi Naik, Mehek Abhyankar, Menaka Jadhav, Vaishnavi Paliwal
+        © 2026 PCOSense | Manasvi Naik, Mehek Abhyankar, Menaka Jadhav, Vaishnavi Paliwal
       </footer>
 
     </div>

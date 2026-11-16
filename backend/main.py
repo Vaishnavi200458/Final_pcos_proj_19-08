@@ -90,6 +90,7 @@ from chatbot.auth import get_current_user_id
 from chatbot.private_store import PrivateDocumentStore
 from uuid import uuid4
 from chatbot.image_processor import image_to_documents
+from groq import Groq
 
 load_dotenv()
 
@@ -103,6 +104,17 @@ if not GEMINI_API_KEY:
 meal_client = genai.Client(
     api_key=GEMINI_API_KEY
 )
+
+
+# Groq fallback client for meal image analysis
+groq_api_key = os.getenv("GROQ_API_KEY")
+
+groq_client = (
+    Groq(api_key=groq_api_key, timeout=20.0, max_retries=0)
+    if groq_api_key
+    else None
+)
+
 
 
 app = FastAPI(title="PCOS Prediction API")
@@ -480,74 +492,120 @@ say so rather than inventing one.
     # Send image to Gemini
     # ----------------------------------------------
 
-    response = None
-    last_error = None
+    
+    # ----------------------------------------------
+    # Analyze meal: Gemini primary, Groq fallback
+    # ----------------------------------------------
 
-    models_to_try = [
-     "gemini-3.7-flash",
-     "gemini-3.6-flash",
-      "gemini-3.5-flash",
-    ]
-    for model_name in models_to_try:
-     for attempt in range(2):
-        try:
-            print(
-                f"Trying meal analyzer model: "
-                f"{model_name} "
-                f"(attempt {attempt + 1})"
-            )
+    import base64
 
-            response = meal_client.models.generate_content(
-                model=model_name,
-                contents=[
-                    types.Part.from_bytes(
-                        data=image_bytes,
-                        mime_type=file.content_type,
-                    ),
-                    prompt,
-                ],
-                config=types.GenerateContentConfig(
-                    response_mime_type="application/json"
+    analysis_text = None
+    
+
+    # 1. Try Gemini first
+    try:
+        print("Trying Gemini meal analyzer...")
+        
+
+        gemini_response = meal_client.models.generate_content(
+            model="gemini-3.7-flash",
+            contents=[
+                types.Part.from_bytes(
+                    data=image_bytes,
+                    mime_type=file.content_type,
                 ),
+                prompt,
+            ],
+            config=types.GenerateContentConfig(
+                response_mime_type="application/json"
+            ),
+        )
+
+        if gemini_response.text:
+            analysis_text = gemini_response.text
+            print("Gemini meal analysis successful.")
+
+    except Exception as error:
+        print(
+            "Gemini meal analysis failed:",
+            type(error).__name__,
+            str(error),
+        )
+
+    # 2. Try Groq if Gemini failed
+    if analysis_text is None and groq_client is not None:
+        try:
+            print("Trying Groq meal analyzer fallback...")
+
+            encoded_image = base64.b64encode(
+                image_bytes
+            ).decode("utf-8")
+
+            image_url = (
+                f"data:{file.content_type};base64,"
+                f"{encoded_image}"
             )
 
-            break
+            groq_response = groq_client.chat.completions.create(
+                model="qwen/qwen3.8-27b",
+                messages=[
+                    {
+                        "role": "user",
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": prompt,
+                            },
+                            {
+                                "type": "image_url",
+                                "image_url": {
+                                    "url": image_url
+                                },
+                            },
+                        ],
+                    }
+                ],
+                temperature=0.2,
+                response_format={
+                    "type": "json_object"
+                },
+            )
+
+            analysis_text = (
+                groq_response.choices[0].message.content
+            )
+
+            if not analysis_text:
+                raise ValueError(
+                    "Groq returned an empty response."
+                )
+
+            print("Groq meal analysis successful.")
 
         except Exception as error:
-            last_error = error
-
             print(
-                f"{model_name} attempt "
-                f"{attempt + 1} failed:"
-            )
-            print(
+                "Groq meal analysis failed:",
                 type(error).__name__,
-                str(error)
+                str(error),
             )
 
-            if attempt < 1:
-                time.sleep(5)
-
-        if response is not None:
-         break
-
-
-
-    if response is None:
+    # 3. Handle failure of both providers
+    if not analysis_text:
         raise HTTPException(
             status_code=503,
             detail=(
-                "The AI meal analyzer is temporarily busy. "
-                "Please try again in a few moments."
+                "The AI meal analyzer is temporarily "
+                "unavailable. Please try again shortly."
             ),
         )
+
 
     # ----------------------------------------------
     # Parse response
     # ----------------------------------------------
 
     try:
-        result = json.loads(response.text)
+        result = json.loads(analysis_text)
 
     except Exception:
         result = {
@@ -558,7 +616,7 @@ say so rather than inventing one.
             "suggestions": [],
             "overall_rating": "Mixed",
             "confidence": "Low",
-            "disclaimer": response.text,
+            "disclaimer": analysis_text,
         }
 
     # ----------------------------------------------
