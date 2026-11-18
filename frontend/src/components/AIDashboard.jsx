@@ -303,7 +303,7 @@ function AIDashboard({
             meals, and cycle tracking, can help you understand your health
             patterns better.
           </p>
-          <button className="secondary-action">Learn More</button>
+          {/* <button className="secondary-action">Learn More</button> */}
         </div>
       </section>
 
